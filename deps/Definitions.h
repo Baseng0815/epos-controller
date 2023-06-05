@@ -13,532 +13,534 @@
  **
  *************************************************************************************************************************************/
 
+#include <stdint.h>
+
 #ifndef _H_LINUX_EPOSCMD_
 #define _H_LINUX_EPOSCMD_
 
 //Communication
-int CreateCommunication();
-int DeleteCommunication();
+int32_t CreateCommunication();
+int32_t DeleteCommunication();
 
 // Data Recorder
-int CreateDataRecorderCmdManager(void* KeyHandle);
-int DeleteDataRecorderCmdManager();
+int32_t CreateDataRecorderCmdManager(void* KeyHandle);
+int32_t DeleteDataRecorderCmdManager();
 
 /*************************************************************************************************************************************
  * INITIALISATION FUNCTIONS
  *************************************************************************************************************************************/
 
 //Communication
-void*  VCS_OpenDevice(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, unsigned int* pErrorCode);
-int  VCS_SetProtocolStackSettings(void* KeyHandle, unsigned int Baudrate, unsigned int Timeout, unsigned int* pErrorCode);
-int  VCS_GetProtocolStackSettings(void* KeyHandle, unsigned int* pBaudrate, unsigned int* pTimeout, unsigned int* pErrorCode);
-int  VCS_CloseDevice(void* KeyHandle, unsigned int* pErrorCode);
-int  VCS_CloseAllDevices(unsigned int* pErrorCode);
+void*  VCS_OpenDevice(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, uint32_t* pErrorCode);
+int32_t  VCS_SetProtocolStackSettings(void* KeyHandle, uint32_t Baudrate, uint32_t Timeout, uint32_t* pErrorCode);
+int32_t  VCS_GetProtocolStackSettings(void* KeyHandle, uint32_t* pBaudrate, uint32_t* pTimeout, uint32_t* pErrorCode);
+int32_t  VCS_CloseDevice(void* KeyHandle, uint32_t* pErrorCode);
+int32_t  VCS_CloseAllDevices(uint32_t* pErrorCode);
 
 //Gateway
-int VCS_SetGatewaySettings(void* KeyHandle, unsigned int Baudrate, unsigned int* pErrorCode);
-int VCS_GetGatewaySettings(void* KeyHandle, unsigned int* pBaudrate, unsigned int* pErrorCode);
+int32_t VCS_SetGatewaySettings(void* KeyHandle, uint32_t Baudrate, uint32_t* pErrorCode);
+int32_t VCS_GetGatewaySettings(void* KeyHandle, uint32_t* pBaudrate, uint32_t* pErrorCode);
 
 //Sub device
-void* VCS_OpenSubDevice(void* DeviceHandle, char* DeviceName, char* ProtocolStackName, unsigned int* pErrorCode);
-int VCS_CloseSubDevice(void* KeyHandle, unsigned int* pErrorCode);
-int VCS_CloseAllSubDevices(void* DeviceHandle, unsigned int* pErrorCode);
+void* VCS_OpenSubDevice(void* DeviceHandle, char* DeviceName, char* ProtocolStackName, uint32_t* pErrorCode);
+int32_t VCS_CloseSubDevice(void* KeyHandle, uint32_t* pErrorCode);
+int32_t VCS_CloseAllSubDevices(void* DeviceHandle, uint32_t* pErrorCode);
 
 //Info
-int  VCS_GetDriverInfo(char* p_pszLibraryName, unsigned short p_usMaxLibraryNameStrSize,char* p_pszLibraryVersion, unsigned short p_usMaxLibraryVersionStrSize, unsigned int* p_pErrorCode);
-int  VCS_GetVersion(void* KeyHandle, unsigned short NodeId, unsigned short* pHardwareVersion, unsigned short* pSoftwareVersion, unsigned short* pApplicationNumber, unsigned short* pApplicationVersion, unsigned int* pErrorCode);
-int  VCS_GetErrorInfo(unsigned int ErrorCodeValue, char* pErrorInfo, unsigned short MaxStrSize);
+int32_t  VCS_GetDriverInfo(char* p_pszLibraryName, uint16_t p_usMaxLibraryNameStrSize,char* p_pszLibraryVersion, uint16_t p_usMaxLibraryVersionStrSize, uint32_t* p_pErrorCode);
+int32_t  VCS_GetVersion(void* KeyHandle, uint16_t NodeId, uint16_t* pHardwareVersion, uint16_t* pSoftwareVersion, uint16_t* pApplicationNumber, uint16_t* pApplicationVersion, uint32_t* pErrorCode);
+int32_t  VCS_GetErrorInfo(uint32_t ErrorCodeValue, char* pErrorInfo, uint16_t MaxStrSize);
 
 //Advanced Functions
-int  VCS_GetDeviceNameSelection(int StartOfSelection, char* pDeviceNameSel, unsigned short MaxStrSize, int* pEndOfSelection, unsigned int* pErrorCode);
-int  VCS_GetProtocolStackNameSelection(char* DeviceName, int StartOfSelection, char* pProtocolStackNameSel, unsigned short MaxStrSize, int* pEndOfSelection, unsigned int* pErrorCode);
-int  VCS_GetInterfaceNameSelection(char* DeviceName, char* ProtocolStackName, int StartOfSelection, char* pInterfaceNameSel, unsigned short MaxStrSize, int* pEndOfSelection, unsigned int* pErrorCode);
-int  VCS_GetPortNameSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, int StartOfSelection, char* pPortSel, unsigned short MaxStrSize, int* pEndOfSelection, unsigned int* pErrorCode);
-int  VCS_ResetPortNameSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, unsigned int* pErrorCode);
-int  VCS_GetBaudrateSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, int StartOfSelection, unsigned int* pBaudrateSel, int* pEndOfSelection, unsigned int* pErrorCode);
-int  VCS_GetKeyHandle(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, void** pKeyHandle, unsigned int* pErrorCode);
-int  VCS_GetDeviceName(void* KeyHandle, char* pDeviceName, unsigned short MaxStrSize, unsigned int* pErrorCode);
-int  VCS_GetProtocolStackName(void* KeyHandle, char* pProtocolStackName, unsigned short MaxStrSize, unsigned int* pErrorCode);
-int  VCS_GetInterfaceName(void* KeyHandle, char* pInterfaceName, unsigned short MaxStrSize, unsigned int* pErrorCode);
-int  VCS_GetPortName(void* KeyHandle, char* pPortName, unsigned short MaxStrSize, unsigned int* pErrorCode);
+int32_t  VCS_GetDeviceNameSelection(int32_t StartOfSelection, char* pDeviceNameSel, uint16_t MaxStrSize, int* pEndOfSelection, uint32_t* pErrorCode);
+int32_t  VCS_GetProtocolStackNameSelection(char* DeviceName, int32_t StartOfSelection, char* pProtocolStackNameSel, uint16_t MaxStrSize, int* pEndOfSelection, uint32_t* pErrorCode);
+int32_t  VCS_GetInterfaceNameSelection(char* DeviceName, char* ProtocolStackName, int32_t StartOfSelection, char* pInterfaceNameSel, uint16_t MaxStrSize, int* pEndOfSelection, uint32_t* pErrorCode);
+int32_t  VCS_GetPortNameSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, int32_t StartOfSelection, char* pPortSel, uint16_t MaxStrSize, int* pEndOfSelection, uint32_t* pErrorCode);
+int32_t  VCS_ResetPortNameSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, uint32_t* pErrorCode);
+int32_t  VCS_GetBaudrateSelection(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, int32_t StartOfSelection, uint32_t* pBaudrateSel, int* pEndOfSelection, uint32_t* pErrorCode);
+int32_t  VCS_GetKeyHandle(char* DeviceName, char* ProtocolStackName, char* InterfaceName, char* PortName, void** pKeyHandle, uint32_t* pErrorCode);
+int32_t  VCS_GetDeviceName(void* KeyHandle, char* pDeviceName, uint16_t MaxStrSize, uint32_t* pErrorCode);
+int32_t  VCS_GetProtocolStackName(void* KeyHandle, char* pProtocolStackName, uint16_t MaxStrSize, uint32_t* pErrorCode);
+int32_t  VCS_GetInterfaceName(void* KeyHandle, char* pInterfaceName, uint16_t MaxStrSize, uint32_t* pErrorCode);
+int32_t  VCS_GetPortName(void* KeyHandle, char* pPortName, uint16_t MaxStrSize, uint32_t* pErrorCode);
 
 /*************************************************************************************************************************************
  * CONFIGURATION FUNCTIONS
  *************************************************************************************************************************************/
 
 //General
-int  VCS_SetObject(void* KeyHandle, unsigned short NodeId, unsigned short ObjectIndex, unsigned char ObjectSubIndex, void* pData, unsigned int NbOfBytesToWrite, unsigned int* pNbOfBytesWritten, unsigned int* pErrorCode);
-int  VCS_GetObject(void* KeyHandle, unsigned short NodeId, unsigned short ObjectIndex, unsigned char ObjectSubIndex, void* pData, unsigned int NbOfBytesToRead, unsigned int* pNbOfBytesRead, unsigned int* pErrorCode);
-int  VCS_Restore(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_Store(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_SetObject(void* KeyHandle, uint16_t NodeId, uint16_t ObjectIndex, uint8_t ObjectSubIndex, void* pData, uint32_t NbOfBytesToWrite, uint32_t* pNbOfBytesWritten, uint32_t* pErrorCode);
+int32_t  VCS_GetObject(void* KeyHandle, uint16_t NodeId, uint16_t ObjectIndex, uint8_t ObjectSubIndex, void* pData, uint32_t NbOfBytesToRead, uint32_t* pNbOfBytesRead, uint32_t* pErrorCode);
+int32_t  VCS_Restore(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_Store(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Advanced Functions
 //Motor
-int  VCS_SetMotorType(void* KeyHandle, unsigned short NodeId, unsigned short MotorType, unsigned int* pErrorCode);
-int  VCS_SetDcMotorParameter(void* KeyHandle, unsigned short NodeId, unsigned short NominalCurrent, unsigned short MaxOutputCurrent, unsigned short ThermalTimeConstant, unsigned int* pErrorCode);
-int  VCS_SetDcMotorParameterEx(void* KeyHandle, unsigned short NodeId, unsigned int NominalCurrent, unsigned int MaxOutputCurrent, unsigned short ThermalTimeConstant, unsigned int* pErrorCode);
-int  VCS_SetEcMotorParameter(void* KeyHandle, unsigned short NodeId, unsigned short NominalCurrent, unsigned short MaxOutputCurrent, unsigned short ThermalTimeConstant, unsigned char NbOfPolePairs, unsigned int* pErrorCode);
-int  VCS_SetEcMotorParameterEx(void* KeyHandle, unsigned short NodeId, unsigned int NominalCurrent, unsigned int MaxOutputCurrent, unsigned short ThermalTimeConstant, unsigned char NbOfPolePairs, unsigned int* pErrorCode);
-int  VCS_GetMotorType(void* KeyHandle, unsigned short NodeId, unsigned short* pMotorType, unsigned int* pErrorCode);
-int  VCS_GetDcMotorParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pNominalCurrent, unsigned short* pMaxOutputCurrent, unsigned short* pThermalTimeConstant, unsigned int* pErrorCode);
-int  VCS_GetDcMotorParameterEx(void* KeyHandle, unsigned short NodeId, unsigned int* pNominalCurrent, unsigned int* pMaxOutputCurrent, unsigned short* pThermalTimeConstant, unsigned int* pErrorCode);
-int  VCS_GetEcMotorParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pNominalCurrent, unsigned short* pMaxOutputCurrent, unsigned short* pThermalTimeConstant, unsigned char* pNbOfPolePairs, unsigned int* pErrorCode);
-int  VCS_GetEcMotorParameterEx(void* KeyHandle, unsigned short NodeId, unsigned int* pNominalCurrent, unsigned int* pMaxOutputCurrent, unsigned short* pThermalTimeConstant, unsigned char* pNbOfPolePairs, unsigned int* pErrorCode);
+int32_t  VCS_SetMotorType(void* KeyHandle, uint16_t NodeId, uint16_t MotorType, uint32_t* pErrorCode);
+int32_t  VCS_SetDcMotorParameter(void* KeyHandle, uint16_t NodeId, uint16_t NominalCurrent, uint16_t MaxOutputCurrent, uint16_t ThermalTimeConstant, uint32_t* pErrorCode);
+int32_t  VCS_SetDcMotorParameterEx(void* KeyHandle, uint16_t NodeId, uint32_t NominalCurrent, uint32_t MaxOutputCurrent, uint16_t ThermalTimeConstant, uint32_t* pErrorCode);
+int32_t  VCS_SetEcMotorParameter(void* KeyHandle, uint16_t NodeId, uint16_t NominalCurrent, uint16_t MaxOutputCurrent, uint16_t ThermalTimeConstant, uint8_t NbOfPolePairs, uint32_t* pErrorCode);
+int32_t  VCS_SetEcMotorParameterEx(void* KeyHandle, uint16_t NodeId, uint32_t NominalCurrent, uint32_t MaxOutputCurrent, uint16_t ThermalTimeConstant, uint8_t NbOfPolePairs, uint32_t* pErrorCode);
+int32_t  VCS_GetMotorType(void* KeyHandle, uint16_t NodeId, uint16_t* pMotorType, uint32_t* pErrorCode);
+int32_t  VCS_GetDcMotorParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pNominalCurrent, uint16_t* pMaxOutputCurrent, uint16_t* pThermalTimeConstant, uint32_t* pErrorCode);
+int32_t  VCS_GetDcMotorParameterEx(void* KeyHandle, uint16_t NodeId, uint32_t* pNominalCurrent, uint32_t* pMaxOutputCurrent, uint16_t* pThermalTimeConstant, uint32_t* pErrorCode);
+int32_t  VCS_GetEcMotorParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pNominalCurrent, uint16_t* pMaxOutputCurrent, uint16_t* pThermalTimeConstant, unsigned char* pNbOfPolePairs, uint32_t* pErrorCode);
+int32_t  VCS_GetEcMotorParameterEx(void* KeyHandle, uint16_t NodeId, uint32_t* pNominalCurrent, uint32_t* pMaxOutputCurrent, uint16_t* pThermalTimeConstant, unsigned char* pNbOfPolePairs, uint32_t* pErrorCode);
 
 //Sensor
-int  VCS_SetSensorType(void* KeyHandle, unsigned short NodeId, unsigned short SensorType, unsigned int* pErrorCode);
-int  VCS_SetIncEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned int EncoderResolution, int InvertedPolarity, unsigned int* pErrorCode);
-int  VCS_SetHallSensorParameter(void* KeyHandle, unsigned short NodeId, int InvertedPolarity, unsigned int* pErrorCode);
-int  VCS_SetSsiAbsEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned short DataRate, unsigned short NbOfMultiTurnDataBits, unsigned short NbOfSingleTurnDataBits, int InvertedPolarity, unsigned int* pErrorCode);
-int  VCS_SetSsiAbsEncoderParameterEx(void* KeyHandle, unsigned short NodeId, unsigned short DataRate, unsigned short NbOfMultiTurnDataBits, unsigned short NbOfSingleTurnDataBits, unsigned short NbOfSpecialDataBits, int InvertedPolarity, unsigned short Timeout, unsigned short PowerupTime, unsigned int* pErrorCode);
-int  VCS_SetSsiAbsEncoderParameterEx2(void* KeyHandle, unsigned short NodeId, unsigned short DataRate, unsigned short NbOfSpecialDataBitsLeading, unsigned short NbOfMultiTurnDataBits, unsigned short NbOfMultiTurnPositionBits, unsigned short NbOfSingleTurnDataBits, unsigned short NbOfSingleTurnPositionBits, unsigned short NbOfSpecialDataBitsTrailing, int InvertedPolarity, unsigned short Timeout, unsigned short PowerupTime, int CheckFrame, int ReferenceReset, unsigned int* pErrorCode);
-int  VCS_GetSensorType(void* KeyHandle, unsigned short NodeId, unsigned short* pSensorType, unsigned int* pErrorCode);
-int  VCS_GetIncEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned int* pEncoderResolution, int* pInvertedPolarity, unsigned int* pErrorCode);
-int  VCS_GetHallSensorParameter(void* KeyHandle, unsigned short NodeId, int* pInvertedPolarity, unsigned int* pErrorCode);
-int  VCS_GetSsiAbsEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pDataRate, unsigned short* pNbOfMultiTurnDataBits, unsigned short* pNbOfSingleTurnDataBits, int* pInvertedPolarity, unsigned int* pErrorCode);
-int  VCS_GetSsiAbsEncoderParameterEx(void* KeyHandle, unsigned short NodeId, unsigned short* pDataRate, unsigned short* pNbOfMultiTurnDataBits, unsigned short* pNbOfSingleTurnDataBits, unsigned short* pNbOfSpecialDataBits, int* pInvertedPolarity, unsigned short* pTimeout, unsigned short* pPowerupTime, unsigned int* pErrorCode);
-int  VCS_GetSsiAbsEncoderParameterEx2(void* KeyHandle, unsigned short NodeId, unsigned short* pDataRate, unsigned short* pNbOfSpecialDataBitsLeading, unsigned short* pNbOfMultiTurnDataBits, unsigned short* pNbOfMultiTurnPositionBits, unsigned short* pNbOfSingleTurnDataBits, unsigned short* pNbOfSingleTurnPositionBits, unsigned short* pNbOfSpecialDataBitsTrailing, int* pInvertedPolarity, unsigned short* pTimeout, unsigned short* pPowerupTime, int* pCheckFrame, int* pReferenceReset, unsigned int* pErrorCode);
+int32_t  VCS_SetSensorType(void* KeyHandle, uint16_t NodeId, uint16_t SensorType, uint32_t* pErrorCode);
+int32_t  VCS_SetIncEncoderParameter(void* KeyHandle, uint16_t NodeId, uint32_t EncoderResolution, int32_t InvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_SetHallSensorParameter(void* KeyHandle, uint16_t NodeId, int32_t InvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_SetSsiAbsEncoderParameter(void* KeyHandle, uint16_t NodeId, uint16_t DataRate, uint16_t NbOfMultiTurnDataBits, uint16_t NbOfSingleTurnDataBits, int32_t InvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_SetSsiAbsEncoderParameterEx(void* KeyHandle, uint16_t NodeId, uint16_t DataRate, uint16_t NbOfMultiTurnDataBits, uint16_t NbOfSingleTurnDataBits, uint16_t NbOfSpecialDataBits, int32_t InvertedPolarity, uint16_t Timeout, uint16_t PowerupTime, uint32_t* pErrorCode);
+int32_t  VCS_SetSsiAbsEncoderParameterEx2(void* KeyHandle, uint16_t NodeId, uint16_t DataRate, uint16_t NbOfSpecialDataBitsLeading, uint16_t NbOfMultiTurnDataBits, uint16_t NbOfMultiTurnPositionBits, uint16_t NbOfSingleTurnDataBits, uint16_t NbOfSingleTurnPositionBits, uint16_t NbOfSpecialDataBitsTrailing, int32_t InvertedPolarity, uint16_t Timeout, uint16_t PowerupTime, int32_t CheckFrame, int32_t ReferenceReset, uint32_t* pErrorCode);
+int32_t  VCS_GetSensorType(void* KeyHandle, uint16_t NodeId, uint16_t* pSensorType, uint32_t* pErrorCode);
+int32_t  VCS_GetIncEncoderParameter(void* KeyHandle, uint16_t NodeId, uint32_t* pEncoderResolution, int* pInvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_GetHallSensorParameter(void* KeyHandle, uint16_t NodeId, int* pInvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_GetSsiAbsEncoderParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pDataRate, uint16_t* pNbOfMultiTurnDataBits, uint16_t* pNbOfSingleTurnDataBits, int* pInvertedPolarity, uint32_t* pErrorCode);
+int32_t  VCS_GetSsiAbsEncoderParameterEx(void* KeyHandle, uint16_t NodeId, uint16_t* pDataRate, uint16_t* pNbOfMultiTurnDataBits, uint16_t* pNbOfSingleTurnDataBits, uint16_t* pNbOfSpecialDataBits, int* pInvertedPolarity, uint16_t* pTimeout, uint16_t* pPowerupTime, uint32_t* pErrorCode);
+int32_t  VCS_GetSsiAbsEncoderParameterEx2(void* KeyHandle, uint16_t NodeId, uint16_t* pDataRate, uint16_t* pNbOfSpecialDataBitsLeading, uint16_t* pNbOfMultiTurnDataBits, uint16_t* pNbOfMultiTurnPositionBits, uint16_t* pNbOfSingleTurnDataBits, uint16_t* pNbOfSingleTurnPositionBits, uint16_t* pNbOfSpecialDataBitsTrailing, int* pInvertedPolarity, uint16_t* pTimeout, uint16_t* pPowerupTime, int* pCheckFrame, int* pReferenceReset, uint32_t* pErrorCode);
 
 //Safety
-int  VCS_SetMaxFollowingError(void* KeyHandle, unsigned short NodeId, unsigned int MaxFollowingError, unsigned int* pErrorCode);
-int  VCS_GetMaxFollowingError(void* KeyHandle, unsigned short NodeId, unsigned int* pMaxFollowingError, unsigned int* pErrorCode);
-int  VCS_SetMaxProfileVelocity(void* KeyHandle, unsigned short NodeId, unsigned int MaxProfileVelocity, unsigned int* pErrorCode);
-int  VCS_GetMaxProfileVelocity(void* KeyHandle, unsigned short NodeId, unsigned int* pMaxProfileVelocity, unsigned int* pErrorCode);
-int  VCS_SetMaxAcceleration(void* KeyHandle, unsigned short NodeId, unsigned int MaxAcceleration, unsigned int* pErrorCode);
-int  VCS_GetMaxAcceleration(void* KeyHandle, unsigned short NodeId, unsigned int* pMaxAcceleration, unsigned int* pErrorCode);
+int32_t  VCS_SetMaxFollowingError(void* KeyHandle, uint16_t NodeId, uint32_t MaxFollowingError, uint32_t* pErrorCode);
+int32_t  VCS_GetMaxFollowingError(void* KeyHandle, uint16_t NodeId, uint32_t* pMaxFollowingError, uint32_t* pErrorCode);
+int32_t  VCS_SetMaxProfileVelocity(void* KeyHandle, uint16_t NodeId, uint32_t MaxProfileVelocity, uint32_t* pErrorCode);
+int32_t  VCS_GetMaxProfileVelocity(void* KeyHandle, uint16_t NodeId, uint32_t* pMaxProfileVelocity, uint32_t* pErrorCode);
+int32_t  VCS_SetMaxAcceleration(void* KeyHandle, uint16_t NodeId, uint32_t MaxAcceleration, uint32_t* pErrorCode);
+int32_t  VCS_GetMaxAcceleration(void* KeyHandle, uint16_t NodeId, uint32_t* pMaxAcceleration, uint32_t* pErrorCode);
 
 //Controller Gains
-int VCS_SetControllerGain(void* KeyHandle, unsigned short NodeId, unsigned short EController, unsigned short EGain, unsigned long long Value, unsigned int* pErrorCode);
-int VCS_GetControllerGain(void* KeyHandle, unsigned short NodeId, unsigned short EController, unsigned short EGain, unsigned long long* pValue, unsigned int* pErrorCode);
+int32_t VCS_SetControllerGain(void* KeyHandle, uint16_t NodeId, uint16_t EController, uint16_t EGain, unsigned long long Value, uint32_t* pErrorCode);
+int32_t VCS_GetControllerGain(void* KeyHandle, uint16_t NodeId, uint16_t EController, uint16_t EGain, unsigned long long* pValue, uint32_t* pErrorCode);
 
 //Inputs/Outputs
-int  VCS_DigitalInputConfiguration(void* KeyHandle, unsigned short NodeId, unsigned short DigitalInputNb, unsigned short Configuration, int Mask, int Polarity, int ExecutionMask, unsigned int* pErrorCode);
-int  VCS_DigitalOutputConfiguration(void* KeyHandle, unsigned short NodeId, unsigned short DigitalOutputNb, unsigned short Configuration, int State, int Mask, int Polarity, unsigned int* pErrorCode);
-int  VCS_AnalogInputConfiguration(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNb, unsigned short Configuration, int ExecutionMask, unsigned int* pErrorCode);
-int  VCS_AnalogOutputConfiguration(void* KeyHandle, unsigned short NodeId, unsigned short AnalogOutputNb, unsigned short Configuration, unsigned int* pErrorCode);
+int32_t  VCS_DigitalInputConfiguration(void* KeyHandle, uint16_t NodeId, uint16_t DigitalInputNb, uint16_t Configuration, int32_t Mask, int32_t Polarity, int32_t ExecutionMask, uint32_t* pErrorCode);
+int32_t  VCS_DigitalOutputConfiguration(void* KeyHandle, uint16_t NodeId, uint16_t DigitalOutputNb, uint16_t Configuration, int32_t State, int32_t Mask, int32_t Polarity, uint32_t* pErrorCode);
+int32_t  VCS_AnalogInputConfiguration(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNb, uint16_t Configuration, int32_t ExecutionMask, uint32_t* pErrorCode);
+int32_t  VCS_AnalogOutputConfiguration(void* KeyHandle, uint16_t NodeId, uint16_t AnalogOutputNb, uint16_t Configuration, uint32_t* pErrorCode);
 
 //Units
-int  VCS_SetVelocityUnits(void* KeyHandle, unsigned short NodeId, unsigned char VelDimension, signed char VelNotation, unsigned int* pErrorCode);
-int  VCS_GetVelocityUnits(void* KeyHandle, unsigned short NodeId, unsigned char* pVelDimension, char* pVelNotation, unsigned int* pErrorCode);
+int32_t  VCS_SetVelocityUnits(void* KeyHandle, uint16_t NodeId, uint8_t VelDimension, int8_t VelNotation, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityUnits(void* KeyHandle, uint16_t NodeId, unsigned char* pVelDimension, char* pVelNotation, uint32_t* pErrorCode);
 
 //Compatibility Functions (do not use)
-int  VCS_SetPositionRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short P, unsigned short I, unsigned short D, unsigned int* pErrorCode);
-int  VCS_SetPositionRegulatorFeedForward(void* KeyHandle, unsigned short NodeId, unsigned short VelocityFeedForward, unsigned short AccelerationFeedForward, unsigned int* pErrorCode);
-int  VCS_GetPositionRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short* pP, unsigned short* pI, unsigned short* pD, unsigned int* pErrorCode);
-int  VCS_GetPositionRegulatorFeedForward(void* KeyHandle, unsigned short NodeId, unsigned short* pVelocityFeedForward, unsigned short* pAccelerationFeedForward, unsigned int* pErrorCode);
+int32_t  VCS_SetPositionRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t P, uint16_t I, uint16_t D, uint32_t* pErrorCode);
+int32_t  VCS_SetPositionRegulatorFeedForward(void* KeyHandle, uint16_t NodeId, uint16_t VelocityFeedForward, uint16_t AccelerationFeedForward, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t* pP, uint16_t* pI, uint16_t* pD, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionRegulatorFeedForward(void* KeyHandle, uint16_t NodeId, uint16_t* pVelocityFeedForward, uint16_t* pAccelerationFeedForward, uint32_t* pErrorCode);
 
-int  VCS_SetVelocityRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short P, unsigned short I, unsigned int* pErrorCode);
-int  VCS_SetVelocityRegulatorFeedForward(void* KeyHandle, unsigned short NodeId, unsigned short VelocityFeedForward, unsigned short AccelerationFeedForward, unsigned int* pErrorCode);
-int  VCS_GetVelocityRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short* pP, unsigned short* pI, unsigned int* pErrorCode);
-int  VCS_GetVelocityRegulatorFeedForward(void* KeyHandle, unsigned short NodeId, unsigned short* pVelocityFeedForward, unsigned short* pAccelerationFeedForward, unsigned int* pErrorCode);
+int32_t  VCS_SetVelocityRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t P, uint16_t I, uint32_t* pErrorCode);
+int32_t  VCS_SetVelocityRegulatorFeedForward(void* KeyHandle, uint16_t NodeId, uint16_t VelocityFeedForward, uint16_t AccelerationFeedForward, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t* pP, uint16_t* pI, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityRegulatorFeedForward(void* KeyHandle, uint16_t NodeId, uint16_t* pVelocityFeedForward, uint16_t* pAccelerationFeedForward, uint32_t* pErrorCode);
 
-int  VCS_SetCurrentRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short P, unsigned short I, unsigned int* pErrorCode);
-int  VCS_GetCurrentRegulatorGain(void* KeyHandle, unsigned short NodeId, unsigned short* pP, unsigned short* pI, unsigned int* pErrorCode);
+int32_t  VCS_SetCurrentRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t P, uint16_t I, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentRegulatorGain(void* KeyHandle, uint16_t NodeId, uint16_t* pP, uint16_t* pI, uint32_t* pErrorCode);
 
 /*************************************************************************************************************************************
  * OPERATION FUNCTIONS
  *************************************************************************************************************************************/
 
 //OperationMode
-int  VCS_SetOperationMode(void* KeyHandle, unsigned short NodeId, char OperationMode, unsigned int* pErrorCode);
-int  VCS_GetOperationMode(void* KeyHandle, unsigned short NodeId, char* pOperationMode, unsigned int* pErrorCode);
+int32_t  VCS_SetOperationMode(void* KeyHandle, uint16_t NodeId, char OperationMode, uint32_t* pErrorCode);
+int32_t  VCS_GetOperationMode(void* KeyHandle, uint16_t NodeId, char* pOperationMode, uint32_t* pErrorCode);
 
 //StateMachine
-int  VCS_ResetDevice(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetState(void* KeyHandle, unsigned short NodeId, unsigned short State, unsigned int* pErrorCode);
-int  VCS_SetEnableState(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetDisableState(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetQuickStopState(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_ClearFault(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_GetState(void* KeyHandle, unsigned short NodeId, unsigned short* pState, unsigned int* pErrorCode);
-int  VCS_GetEnableState(void* KeyHandle, unsigned short NodeId, int* pIsEnabled, unsigned int* pErrorCode);
-int  VCS_GetDisableState(void* KeyHandle, unsigned short NodeId, int* pIsDisabled, unsigned int* pErrorCode);
-int  VCS_GetQuickStopState(void* KeyHandle, unsigned short NodeId, int* pIsQuickStopped, unsigned int* pErrorCode);
-int  VCS_GetFaultState(void* KeyHandle, unsigned short NodeId, int* pIsInFault, unsigned int* pErrorCode);
+int32_t  VCS_ResetDevice(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetState(void* KeyHandle, uint16_t NodeId, uint16_t State, uint32_t* pErrorCode);
+int32_t  VCS_SetEnableState(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetDisableState(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetQuickStopState(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_ClearFault(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_GetState(void* KeyHandle, uint16_t NodeId, uint16_t* pState, uint32_t* pErrorCode);
+int32_t  VCS_GetEnableState(void* KeyHandle, uint16_t NodeId, int* pIsEnabled, uint32_t* pErrorCode);
+int32_t  VCS_GetDisableState(void* KeyHandle, uint16_t NodeId, int* pIsDisabled, uint32_t* pErrorCode);
+int32_t  VCS_GetQuickStopState(void* KeyHandle, uint16_t NodeId, int* pIsQuickStopped, uint32_t* pErrorCode);
+int32_t  VCS_GetFaultState(void* KeyHandle, uint16_t NodeId, int* pIsInFault, uint32_t* pErrorCode);
 
 //ErrorHandling
-int  VCS_GetNbOfDeviceError(void* KeyHandle, unsigned short NodeId, unsigned char *pNbDeviceError, unsigned int *pErrorCode);
-int  VCS_GetDeviceErrorCode(void* KeyHandle, unsigned short NodeId, unsigned char DeviceErrorNumber, unsigned int *pDeviceErrorCode, unsigned int *pErrorCode);
+int32_t  VCS_GetNbOfDeviceError(void* KeyHandle, uint16_t NodeId, uint8_t *pNbDeviceError, uint32_t *pErrorCode);
+int32_t  VCS_GetDeviceErrorCode(void* KeyHandle, uint16_t NodeId, uint8_t DeviceErrorNumber, uint32_t *pDeviceErrorCode, uint32_t *pErrorCode);
 
 //Motion Info
-int  VCS_GetMovementState(void* KeyHandle, unsigned short NodeId, int* pTargetReached, unsigned int* pErrorCode);
-int  VCS_GetPositionIs(void* KeyHandle, unsigned short NodeId, int* pPositionIs, unsigned int* pErrorCode);
-int  VCS_GetVelocityIs(void* KeyHandle, unsigned short NodeId, int* pVelocityIs, unsigned int* pErrorCode);
-int  VCS_GetVelocityIsAveraged(void* KeyHandle, unsigned short NodeId, int* pVelocityIsAveraged, unsigned int* pErrorCode);
-int  VCS_GetCurrentIs(void* KeyHandle, unsigned short NodeId, short* pCurrentIs, unsigned int* pErrorCode);
-int  VCS_GetCurrentIsEx(void* KeyHandle, unsigned short NodeId, int* pCurrentIs, unsigned int* pErrorCode);
-int  VCS_GetCurrentIsAveraged(void* KeyHandle, unsigned short NodeId, short* pCurrentIsAveraged, unsigned int* pErrorCode);
-int  VCS_GetCurrentIsAveragedEx(void* KeyHandle, unsigned short NodeId, int* pCurrentIsAveraged, unsigned int* pErrorCode);
-int  VCS_WaitForTargetReached(void* KeyHandle, unsigned short NodeId, unsigned int Timeout, unsigned int* pErrorCode);
+int32_t  VCS_GetMovementState(void* KeyHandle, uint16_t NodeId, int* pTargetReached, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionIs(void* KeyHandle, uint16_t NodeId, int* pPositionIs, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityIs(void* KeyHandle, uint16_t NodeId, int* pVelocityIs, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityIsAveraged(void* KeyHandle, uint16_t NodeId, int* pVelocityIsAveraged, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentIs(void* KeyHandle, uint16_t NodeId, short* pCurrentIs, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentIsEx(void* KeyHandle, uint16_t NodeId, int* pCurrentIs, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentIsAveraged(void* KeyHandle, uint16_t NodeId, short* pCurrentIsAveraged, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentIsAveragedEx(void* KeyHandle, uint16_t NodeId, int* pCurrentIsAveraged, uint32_t* pErrorCode);
+int32_t  VCS_WaitForTargetReached(void* KeyHandle, uint16_t NodeId, uint32_t Timeout, uint32_t* pErrorCode);
 
 //Profile Position Mode
-int  VCS_ActivateProfilePositionMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetPositionProfile(void* KeyHandle, unsigned short NodeId, unsigned int ProfileVelocity, unsigned int ProfileAcceleration, unsigned int ProfileDeceleration, unsigned int* pErrorCode);
-int  VCS_GetPositionProfile(void* KeyHandle, unsigned short NodeId, unsigned int* pProfileVelocity, unsigned int* pProfileAcceleration, unsigned int* pProfileDeceleration, unsigned int* pErrorCode);
-int  VCS_MoveToPosition(void* KeyHandle, unsigned short NodeId, long TargetPosition, int Absolute, int Immediately, unsigned int* pErrorCode);
-int  VCS_GetTargetPosition(void* KeyHandle, unsigned short NodeId, long* pTargetPosition, unsigned int* pErrorCode);
-int  VCS_HaltPositionMovement(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_ActivateProfilePositionMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetPositionProfile(void* KeyHandle, uint16_t NodeId, uint32_t ProfileVelocity, uint32_t ProfileAcceleration, uint32_t ProfileDeceleration, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionProfile(void* KeyHandle, uint16_t NodeId, uint32_t* pProfileVelocity, uint32_t* pProfileAcceleration, uint32_t* pProfileDeceleration, uint32_t* pErrorCode);
+int32_t  VCS_MoveToPosition(void* KeyHandle, uint16_t NodeId, long TargetPosition, int32_t Absolute, int32_t Immediately, uint32_t* pErrorCode);
+int32_t  VCS_GetTargetPosition(void* KeyHandle, uint16_t NodeId, long* pTargetPosition, uint32_t* pErrorCode);
+int32_t  VCS_HaltPositionMovement(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Advanced Functions
-int  VCS_EnablePositionWindow(void* KeyHandle, unsigned short NodeId, unsigned int PositionWindow, unsigned short PositionWindowTime, unsigned int* pErrorCode);
-int  VCS_DisablePositionWindow(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_EnablePositionWindow(void* KeyHandle, uint16_t NodeId, uint32_t PositionWindow, uint16_t PositionWindowTime, uint32_t* pErrorCode);
+int32_t  VCS_DisablePositionWindow(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Profile Velocity Mode
-int  VCS_ActivateProfileVelocityMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetVelocityProfile(void* KeyHandle, unsigned short NodeId, unsigned int ProfileAcceleration, unsigned int ProfileDeceleration, unsigned int* pErrorCode);
-int  VCS_GetVelocityProfile(void* KeyHandle, unsigned short NodeId, unsigned int* pProfileAcceleration, unsigned int* pProfileDeceleration, unsigned int* pErrorCode);
-int  VCS_MoveWithVelocity(void* KeyHandle, unsigned short NodeId, long TargetVelocity, unsigned int* pErrorCode);
-int  VCS_GetTargetVelocity(void* KeyHandle, unsigned short NodeId, long* pTargetVelocity, unsigned int* pErrorCode);
-int  VCS_HaltVelocityMovement(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_ActivateProfileVelocityMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetVelocityProfile(void* KeyHandle, uint16_t NodeId, uint32_t ProfileAcceleration, uint32_t ProfileDeceleration, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityProfile(void* KeyHandle, uint16_t NodeId, uint32_t* pProfileAcceleration, uint32_t* pProfileDeceleration, uint32_t* pErrorCode);
+int32_t  VCS_MoveWithVelocity(void* KeyHandle, uint16_t NodeId, long TargetVelocity, uint32_t* pErrorCode);
+int32_t  VCS_GetTargetVelocity(void* KeyHandle, uint16_t NodeId, long* pTargetVelocity, uint32_t* pErrorCode);
+int32_t  VCS_HaltVelocityMovement(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Advanced Functions
-int  VCS_EnableVelocityWindow(void* KeyHandle, unsigned short NodeId, unsigned int VelocityWindow, unsigned short VelocityWindowTime, unsigned int* pErrorCode);
-int  VCS_DisableVelocityWindow(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_EnableVelocityWindow(void* KeyHandle, uint16_t NodeId, uint32_t VelocityWindow, uint16_t VelocityWindowTime, uint32_t* pErrorCode);
+int32_t  VCS_DisableVelocityWindow(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Homing Mode
-int  VCS_ActivateHomingMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetHomingParameter(void* KeyHandle, unsigned short NodeId, unsigned int HomingAcceleration, unsigned int SpeedSwitch, unsigned int SpeedIndex, int HomeOffset, unsigned short CurrentThreshold, int HomePosition, unsigned int* pErrorCode);
-int  VCS_GetHomingParameter(void* KeyHandle, unsigned short NodeId, unsigned int* pHomingAcceleration, unsigned int* pSpeedSwitch, unsigned int* pSpeedIndex, int* pHomeOffset, unsigned short* pCurrentThreshold, int* pHomePosition, unsigned int* pErrorCode);
-int  VCS_FindHome(void* KeyHandle, unsigned short NodeId, signed char HomingMethod, unsigned int* pErrorCode);
-int  VCS_StopHoming(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_DefinePosition(void* KeyHandle, unsigned short NodeId, int HomePosition, unsigned int* pErrorCode);
-int  VCS_WaitForHomingAttained(void* KeyHandle, unsigned short NodeId, int Timeout, unsigned int* pErrorCode);
-int  VCS_GetHomingState(void* KeyHandle, unsigned short NodeId, int* pHomingAttained, int* pHomingError, unsigned int* pErrorCode);
+int32_t  VCS_ActivateHomingMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetHomingParameter(void* KeyHandle, uint16_t NodeId, uint32_t HomingAcceleration, uint32_t SpeedSwitch, uint32_t SpeedIndex, int32_t HomeOffset, uint16_t CurrentThreshold, int32_t HomePosition, uint32_t* pErrorCode);
+int32_t  VCS_GetHomingParameter(void* KeyHandle, uint16_t NodeId, uint32_t* pHomingAcceleration, uint32_t* pSpeedSwitch, uint32_t* pSpeedIndex, int* pHomeOffset, uint16_t* pCurrentThreshold, int* pHomePosition, uint32_t* pErrorCode);
+int32_t  VCS_FindHome(void* KeyHandle, uint16_t NodeId, int8_t HomingMethod, uint32_t* pErrorCode);
+int32_t  VCS_StopHoming(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_DefinePosition(void* KeyHandle, uint16_t NodeId, int32_t HomePosition, uint32_t* pErrorCode);
+int32_t  VCS_WaitForHomingAttained(void* KeyHandle, uint16_t NodeId, int32_t Timeout, uint32_t* pErrorCode);
+int32_t  VCS_GetHomingState(void* KeyHandle, uint16_t NodeId, int* pHomingAttained, int* pHomingError, uint32_t* pErrorCode);
 
 //Interpolated Position Mode
-int  VCS_ActivateInterpolatedPositionMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetIpmBufferParameter(void* KeyHandle, unsigned short NodeId, unsigned short UnderflowWarningLimit, unsigned short OverflowWarningLimit, unsigned int* pErrorCode);
-int  VCS_GetIpmBufferParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pUnderflowWarningLimit, unsigned short* pOverflowWarningLimit, unsigned int* pMaxBufferSize, unsigned int* pErrorCode);
-int  VCS_ClearIpmBuffer(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_GetFreeIpmBufferSize(void* KeyHandle, unsigned short NodeId, unsigned int* pBufferSize, unsigned int* pErrorCode);
-int  VCS_AddPvtValueToIpmBuffer(void* KeyHandle, unsigned short NodeId, long Position, long Velocity, unsigned char Time, unsigned int* pErrorCode);
-int  VCS_StartIpmTrajectory(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_StopIpmTrajectory(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_GetIpmStatus(void* KeyHandle, unsigned short NodeId, int* pTrajectoryRunning, int* pIsUnderflowWarning, int* pIsOverflowWarning, int* pIsVelocityWarning, int* pIsAccelerationWarning, int* pIsUnderflowError, int* pIsOverflowError, int* pIsVelocityError, int* pIsAccelerationError, unsigned int* pErrorCode);
+int32_t  VCS_ActivateInterpolatedPositionMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetIpmBufferParameter(void* KeyHandle, uint16_t NodeId, uint16_t UnderflowWarningLimit, uint16_t OverflowWarningLimit, uint32_t* pErrorCode);
+int32_t  VCS_GetIpmBufferParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pUnderflowWarningLimit, uint16_t* pOverflowWarningLimit, uint32_t* pMaxBufferSize, uint32_t* pErrorCode);
+int32_t  VCS_ClearIpmBuffer(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_GetFreeIpmBufferSize(void* KeyHandle, uint16_t NodeId, uint32_t* pBufferSize, uint32_t* pErrorCode);
+int32_t  VCS_AddPvtValueToIpmBuffer(void* KeyHandle, uint16_t NodeId, long Position, long Velocity, uint8_t Time, uint32_t* pErrorCode);
+int32_t  VCS_StartIpmTrajectory(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_StopIpmTrajectory(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_GetIpmStatus(void* KeyHandle, uint16_t NodeId, int* pTrajectoryRunning, int* pIsUnderflowWarning, int* pIsOverflowWarning, int* pIsVelocityWarning, int* pIsAccelerationWarning, int* pIsUnderflowError, int* pIsOverflowError, int* pIsVelocityError, int* pIsAccelerationError, uint32_t* pErrorCode);
 
 //Position Mode
-int  VCS_ActivatePositionMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetPositionMust(void* KeyHandle, unsigned short NodeId, long PositionMust, unsigned int* pErrorCode);
-int  VCS_GetPositionMust(void* KeyHandle, unsigned short NodeId, long* pPositionMust, unsigned int* pErrorCode);
+int32_t  VCS_ActivatePositionMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetPositionMust(void* KeyHandle, uint16_t NodeId, long PositionMust, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionMust(void* KeyHandle, uint16_t NodeId, long* pPositionMust, uint32_t* pErrorCode);
 
 //Advanced Functions
-int  VCS_ActivateAnalogPositionSetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, float Scaling, long Offset, unsigned int* pErrorCode);
-int  VCS_DeactivateAnalogPositionSetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, unsigned int* pErrorCode);
-int  VCS_EnableAnalogPositionSetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_DisableAnalogPositionSetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_ActivateAnalogPositionSetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, float Scaling, long Offset, uint32_t* pErrorCode);
+int32_t  VCS_DeactivateAnalogPositionSetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, uint32_t* pErrorCode);
+int32_t  VCS_EnableAnalogPositionSetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_DisableAnalogPositionSetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Velocity Mode
-int  VCS_ActivateVelocityMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetVelocityMust(void* KeyHandle, unsigned short NodeId, long VelocityMust, unsigned int* pErrorCode);
-int  VCS_GetVelocityMust(void* KeyHandle, unsigned short NodeId, long* pVelocityMust, unsigned int* pErrorCode);
+int32_t  VCS_ActivateVelocityMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetVelocityMust(void* KeyHandle, uint16_t NodeId, long VelocityMust, uint32_t* pErrorCode);
+int32_t  VCS_GetVelocityMust(void* KeyHandle, uint16_t NodeId, long* pVelocityMust, uint32_t* pErrorCode);
 
 //Advanced Functions
-int  VCS_ActivateAnalogVelocitySetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, float Scaling, long Offset, unsigned int* pErrorCode);
-int  VCS_DeactivateAnalogVelocitySetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, unsigned int* pErrorCode);
-int  VCS_EnableAnalogVelocitySetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_DisableAnalogVelocitySetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_ActivateAnalogVelocitySetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, float Scaling, long Offset, uint32_t* pErrorCode);
+int32_t  VCS_DeactivateAnalogVelocitySetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, uint32_t* pErrorCode);
+int32_t  VCS_EnableAnalogVelocitySetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_DisableAnalogVelocitySetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //Current Mode
-int  VCS_ActivateCurrentMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetCurrentMust(void* KeyHandle, unsigned short NodeId, short CurrentMust, unsigned int* pErrorCode);
-int  VCS_SetCurrentMustEx(void* KeyHandle, unsigned short NodeId, int CurrentMust, unsigned int* pErrorCode);
-int  VCS_GetCurrentMust(void* KeyHandle, unsigned short NodeId, short* pCurrentMust, unsigned int* pErrorCode);
-int  VCS_GetCurrentMustEx(void* KeyHandle, unsigned short NodeId, int* pCurrentMust, unsigned int* pErrorCode);
+int32_t  VCS_ActivateCurrentMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetCurrentMust(void* KeyHandle, uint16_t NodeId, short CurrentMust, uint32_t* pErrorCode);
+int32_t  VCS_SetCurrentMustEx(void* KeyHandle, uint16_t NodeId, int32_t CurrentMust, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentMust(void* KeyHandle, uint16_t NodeId, short* pCurrentMust, uint32_t* pErrorCode);
+int32_t  VCS_GetCurrentMustEx(void* KeyHandle, uint16_t NodeId, int* pCurrentMust, uint32_t* pErrorCode);
 
 //Advanced Functions
-int  VCS_ActivateAnalogCurrentSetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, float Scaling, short Offset, unsigned int* pErrorCode);
-int  VCS_DeactivateAnalogCurrentSetpoint(void* KeyHandle, unsigned short NodeId, unsigned short AnalogInputNumber, unsigned int* pErrorCode);
-int  VCS_EnableAnalogCurrentSetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_DisableAnalogCurrentSetpoint(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_ActivateAnalogCurrentSetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, float Scaling, short Offset, uint32_t* pErrorCode);
+int32_t  VCS_DeactivateAnalogCurrentSetpoint(void* KeyHandle, uint16_t NodeId, uint16_t AnalogInputNumber, uint32_t* pErrorCode);
+int32_t  VCS_EnableAnalogCurrentSetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_DisableAnalogCurrentSetpoint(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //MasterEncoder Mode
-int  VCS_ActivateMasterEncoderMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetMasterEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned short ScalingNumerator, unsigned short ScalingDenominator, unsigned char Polarity, unsigned int MaxVelocity, unsigned int MaxAcceleration, unsigned int* pErrorCode);
-int  VCS_GetMasterEncoderParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pScalingNumerator, unsigned short* pScalingDenominator, unsigned char* pPolarity, unsigned int* pMaxVelocity, unsigned int* pMaxAcceleration, unsigned int* pErrorCode);
+int32_t  VCS_ActivateMasterEncoderMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetMasterEncoderParameter(void* KeyHandle, uint16_t NodeId, uint16_t ScalingNumerator, uint16_t ScalingDenominator, uint8_t Polarity, uint32_t MaxVelocity, uint32_t MaxAcceleration, uint32_t* pErrorCode);
+int32_t  VCS_GetMasterEncoderParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pScalingNumerator, uint16_t* pScalingDenominator, unsigned char* pPolarity, uint32_t* pMaxVelocity, uint32_t* pMaxAcceleration, uint32_t* pErrorCode);
 
 //StepDirection Mode
-int  VCS_ActivateStepDirectionMode(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetStepDirectionParameter(void* KeyHandle, unsigned short NodeId, unsigned short ScalingNumerator, unsigned short ScalingDenominator, unsigned char Polarity, unsigned int MaxVelocity, unsigned int MaxAcceleration, unsigned int* pErrorCode);
-int  VCS_GetStepDirectionParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pScalingNumerator, unsigned short* pScalingDenominator, unsigned char* pPolarity, unsigned int* pMaxVelocity, unsigned int* pMaxAcceleration, unsigned int* pErrorCode);
+int32_t  VCS_ActivateStepDirectionMode(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetStepDirectionParameter(void* KeyHandle, uint16_t NodeId, uint16_t ScalingNumerator, uint16_t ScalingDenominator, uint8_t Polarity, uint32_t MaxVelocity, uint32_t MaxAcceleration, uint32_t* pErrorCode);
+int32_t  VCS_GetStepDirectionParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pScalingNumerator, uint16_t* pScalingDenominator, unsigned char* pPolarity, uint32_t* pMaxVelocity, uint32_t* pMaxAcceleration, uint32_t* pErrorCode);
 
 //Inputs Outputs
 //General
-int  VCS_GetAllDigitalInputs(void* KeyHandle, unsigned short NodeId, unsigned short* pInputs, unsigned int* pErrorCode);
-int  VCS_GetAllDigitalOutputs(void* KeyHandle, unsigned short NodeId, unsigned short* pOutputs, unsigned int* pErrorCode);
-int  VCS_SetAllDigitalOutputs(void* KeyHandle, unsigned short NodeId, unsigned short Outputs, unsigned int* pErrorCode);
-int  VCS_GetAnalogInput(void* KeyHandle, unsigned short NodeId, unsigned short InputNumber, unsigned short* pAnalogValue, unsigned int* pErrorCode);
-int  VCS_GetAnalogInputVoltage(void* KeyHandle, unsigned short NodeId, unsigned short InputNumber, long* pVoltageValue, unsigned int* pErrorCode);
-int  VCS_GetAnalogInputState(void* KeyHandle, unsigned short NodeId, unsigned short Configuration, long* pStateValue, unsigned int* pErrorCode);
-int  VCS_SetAnalogOutput(void* KeyHandle, unsigned short NodeId, unsigned short OutputNumber, unsigned short AnalogValue, unsigned int* pErrorCode);
-int  VCS_SetAnalogOutputVoltage(void* KeyHandle, unsigned short NodeId, unsigned short OutputNumber, long VoltageValue, unsigned int* pErrorCode);
-int  VCS_SetAnalogOutputState(void* KeyHandle, unsigned short NodeId, unsigned short Configuration, long StateValue, unsigned int* pErrorCode);
+int32_t  VCS_GetAllDigitalInputs(void* KeyHandle, uint16_t NodeId, uint16_t* pInputs, uint32_t* pErrorCode);
+int32_t  VCS_GetAllDigitalOutputs(void* KeyHandle, uint16_t NodeId, uint16_t* pOutputs, uint32_t* pErrorCode);
+int32_t  VCS_SetAllDigitalOutputs(void* KeyHandle, uint16_t NodeId, uint16_t Outputs, uint32_t* pErrorCode);
+int32_t  VCS_GetAnalogInput(void* KeyHandle, uint16_t NodeId, uint16_t InputNumber, uint16_t* pAnalogValue, uint32_t* pErrorCode);
+int32_t  VCS_GetAnalogInputVoltage(void* KeyHandle, uint16_t NodeId, uint16_t InputNumber, long* pVoltageValue, uint32_t* pErrorCode);
+int32_t  VCS_GetAnalogInputState(void* KeyHandle, uint16_t NodeId, uint16_t Configuration, long* pStateValue, uint32_t* pErrorCode);
+int32_t  VCS_SetAnalogOutput(void* KeyHandle, uint16_t NodeId, uint16_t OutputNumber, uint16_t AnalogValue, uint32_t* pErrorCode);
+int32_t  VCS_SetAnalogOutputVoltage(void* KeyHandle, uint16_t NodeId, uint16_t OutputNumber, long VoltageValue, uint32_t* pErrorCode);
+int32_t  VCS_SetAnalogOutputState(void* KeyHandle, uint16_t NodeId, uint16_t Configuration, long StateValue, uint32_t* pErrorCode);
 
 //Position Compare
-int  VCS_SetPositionCompareParameter(void* KeyHandle, unsigned short NodeId, unsigned char OperationalMode, unsigned char IntervalMode, unsigned char DirectionDependency, unsigned short IntervalWidth, unsigned short IntervalRepetitions, unsigned short PulseWidth, unsigned int* pErrorCode);
-int  VCS_GetPositionCompareParameter(void* KeyHandle, unsigned short NodeId, unsigned char* pOperationalMode, unsigned char* pIntervalMode, unsigned char* pDirectionDependency, unsigned short* pIntervalWidth, unsigned short* pIntervalRepetitions, unsigned short* pPulseWidth, unsigned int* pErrorCode);
-int  VCS_ActivatePositionCompare(void* KeyHandle, unsigned short NodeId, unsigned short DigitalOutputNumber, int Polarity, unsigned int* pErrorCode);
-int  VCS_DeactivatePositionCompare(void* KeyHandle, unsigned short NodeId, unsigned short DigitalOutputNumber, unsigned int* pErrorCode);
-int  VCS_EnablePositionCompare(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_DisablePositionCompare(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int  VCS_SetPositionCompareReferencePosition(void* KeyHandle, unsigned short NodeId, long ReferencePosition, unsigned int* pErrorCode);
+int32_t  VCS_SetPositionCompareParameter(void* KeyHandle, uint16_t NodeId, uint8_t OperationalMode, uint8_t IntervalMode, uint8_t DirectionDependency, uint16_t IntervalWidth, uint16_t IntervalRepetitions, uint16_t PulseWidth, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionCompareParameter(void* KeyHandle, uint16_t NodeId, unsigned char* pOperationalMode, unsigned char* pIntervalMode, unsigned char* pDirectionDependency, uint16_t* pIntervalWidth, uint16_t* pIntervalRepetitions, uint16_t* pPulseWidth, uint32_t* pErrorCode);
+int32_t  VCS_ActivatePositionCompare(void* KeyHandle, uint16_t NodeId, uint16_t DigitalOutputNumber, int32_t Polarity, uint32_t* pErrorCode);
+int32_t  VCS_DeactivatePositionCompare(void* KeyHandle, uint16_t NodeId, uint16_t DigitalOutputNumber, uint32_t* pErrorCode);
+int32_t  VCS_EnablePositionCompare(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_DisablePositionCompare(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t  VCS_SetPositionCompareReferencePosition(void* KeyHandle, uint16_t NodeId, long ReferencePosition, uint32_t* pErrorCode);
 
 //Position Marker
-int  VCS_SetPositionMarkerParameter(void* KeyHandle, unsigned short NodeId, unsigned char PositionMarkerEdgeType, unsigned char PositionMarkerMode, unsigned int* pErrorCode);
-int  VCS_GetPositionMarkerParameter(void* KeyHandle, unsigned short NodeId, unsigned char* pPositionMarkerEdgeType, unsigned char* pPositionMarkerMode, unsigned int* pErrorCode);
-int  VCS_ActivatePositionMarker(void* KeyHandle, unsigned short NodeId, unsigned short DigitalInputNumber, int Polarity, unsigned int* pErrorCode);
-int  VCS_DeactivatePositionMarker(void* KeyHandle, unsigned short NodeId, unsigned short DigitalInputNumber, unsigned int* pErrorCode);
-int  VCS_ReadPositionMarkerCounter(void* KeyHandle, unsigned short NodeId, unsigned short* pCount, unsigned int* pErrorCode);
-int  VCS_ReadPositionMarkerCapturedPosition(void* KeyHandle, unsigned short NodeId, unsigned short CounterIndex, long* pCapturedPosition, unsigned int* pErrorCode);
-int  VCS_ResetPositionMarkerCounter(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t  VCS_SetPositionMarkerParameter(void* KeyHandle, uint16_t NodeId, uint8_t PositionMarkerEdgeType, uint8_t PositionMarkerMode, uint32_t* pErrorCode);
+int32_t  VCS_GetPositionMarkerParameter(void* KeyHandle, uint16_t NodeId, unsigned char* pPositionMarkerEdgeType, unsigned char* pPositionMarkerMode, uint32_t* pErrorCode);
+int32_t  VCS_ActivatePositionMarker(void* KeyHandle, uint16_t NodeId, uint16_t DigitalInputNumber, int32_t Polarity, uint32_t* pErrorCode);
+int32_t  VCS_DeactivatePositionMarker(void* KeyHandle, uint16_t NodeId, uint16_t DigitalInputNumber, uint32_t* pErrorCode);
+int32_t  VCS_ReadPositionMarkerCounter(void* KeyHandle, uint16_t NodeId, uint16_t* pCount, uint32_t* pErrorCode);
+int32_t  VCS_ReadPositionMarkerCapturedPosition(void* KeyHandle, uint16_t NodeId, uint16_t CounterIndex, long* pCapturedPosition, uint32_t* pErrorCode);
+int32_t  VCS_ResetPositionMarkerCounter(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //*******************************************************************************************************************
 // DATA RECORDING FUNCTIONS
 //*******************************************************************************************************************
 
 //DataRecorder Setup
-int VCS_SetRecorderParameter(void* KeyHandle, unsigned short NodeId, unsigned short SamplingPeriod, unsigned short NbOfPrecedingSamples, unsigned int* pErrorCode);
-int VCS_GetRecorderParameter(void* KeyHandle, unsigned short NodeId, unsigned short* pSamplingPeriod, unsigned short* pNbOfPrecedingSamples, unsigned int* pErrorCode);
-int VCS_EnableTrigger(void* KeyHandle, unsigned short NodeId, unsigned char TriggerType, unsigned int* pErrorCode);
-int VCS_DisableAllTriggers(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int VCS_ActivateChannel(void* KeyHandle, unsigned short NodeId, unsigned char ChannelNumber, unsigned short ObjectIndex, unsigned char ObjectSubIndex, unsigned char ObjectSize, unsigned int* pErrorCode);
-int VCS_DeactivateAllChannels(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
+int32_t VCS_SetRecorderParameter(void* KeyHandle, uint16_t NodeId, uint16_t SamplingPeriod, uint16_t NbOfPrecedingSamples, uint32_t* pErrorCode);
+int32_t VCS_GetRecorderParameter(void* KeyHandle, uint16_t NodeId, uint16_t* pSamplingPeriod, uint16_t* pNbOfPrecedingSamples, uint32_t* pErrorCode);
+int32_t VCS_EnableTrigger(void* KeyHandle, uint16_t NodeId, uint8_t TriggerType, uint32_t* pErrorCode);
+int32_t VCS_DisableAllTriggers(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t VCS_ActivateChannel(void* KeyHandle, uint16_t NodeId, uint8_t ChannelNumber, uint16_t ObjectIndex, uint8_t ObjectSubIndex, uint8_t ObjectSize, uint32_t* pErrorCode);
+int32_t VCS_DeactivateAllChannels(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
 
 //DataRecorder Status
-int VCS_StartRecorder(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int VCS_StopRecorder(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int VCS_ForceTrigger(void* KeyHandle, unsigned short NodeId, unsigned int* pErrorCode);
-int VCS_IsRecorderRunning(void* KeyHandle, unsigned short NodeId, int* pRunning, unsigned int* pErrorCode);
-int VCS_IsRecorderTriggered(void* KeyHandle, unsigned short NodeId, int* pTriggered, unsigned int* pErrorCode);
+int32_t VCS_StartRecorder(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t VCS_StopRecorder(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t VCS_ForceTrigger(void* KeyHandle, uint16_t NodeId, uint32_t* pErrorCode);
+int32_t VCS_IsRecorderRunning(void* KeyHandle, uint16_t NodeId, int* pRunning, uint32_t* pErrorCode);
+int32_t VCS_IsRecorderTriggered(void* KeyHandle, uint16_t NodeId, int* pTriggered, uint32_t* pErrorCode);
 
 //DataRecorder Data
-int VCS_ReadChannelVectorSize(void* KeyHandle, unsigned short NodeId, unsigned int* pVectorSize, unsigned int* pErrorCode);
-int VCS_ReadChannelDataVector(void* KeyHandle, unsigned short NodeId, unsigned char ChannelNumber, unsigned char* pDataVectorBuffer, unsigned int VectorBufferSize, unsigned int* pErrorCode);
+int32_t VCS_ReadChannelVectorSize(void* KeyHandle, uint16_t NodeId, uint32_t* pVectorSize, uint32_t* pErrorCode);
+int32_t VCS_ReadChannelDataVector(void* KeyHandle, uint16_t NodeId, uint8_t ChannelNumber, unsigned char* pDataVectorBuffer, uint32_t VectorBufferSize, uint32_t* pErrorCode);
 
 //Advanced Functions
-int VCS_ReadDataBuffer(void* KeyHandle, unsigned short NodeId, unsigned char* pDataBuffer, unsigned int BufferSizeToRead, unsigned int* pBufferSizeRead, unsigned short* pVectorStartOffset, unsigned short* pMaxNbOfSamples, unsigned short* pNbOfRecordedSamples, unsigned int* pErrorCode);
-int VCS_ExtractChannelDataVector(void* KeyHandle, unsigned short NodeId, unsigned char ChannelNumber, unsigned char* pDataBuffer, unsigned int BufferSize, unsigned char* pDataVector, unsigned int VectorSize, unsigned short VectorStartOffset, unsigned short MaxNbOfSamples, unsigned short NbOfRecordedSamples, unsigned int* pErrorCode);
+int32_t VCS_ReadDataBuffer(void* KeyHandle, uint16_t NodeId, unsigned char* pDataBuffer, uint32_t BufferSizeToRead, uint32_t* pBufferSizeRead, uint16_t* pVectorStartOffset, uint16_t* pMaxNbOfSamples, uint16_t* pNbOfRecordedSamples, uint32_t* pErrorCode);
+int32_t VCS_ExtractChannelDataVector(void* KeyHandle, uint16_t NodeId, uint8_t ChannelNumber, unsigned char* pDataBuffer, uint32_t BufferSize, unsigned char* pDataVector, uint32_t VectorSize, uint16_t VectorStartOffset, uint16_t MaxNbOfSamples, uint16_t NbOfRecordedSamples, uint32_t* pErrorCode);
 
 /*************************************************************************************************************************************
  * LOW LAYER FUNCTIONS
  *************************************************************************************************************************************/
 
 //CanLayer Functions
-int  VCS_SendCANFrame(void* KeyHandle, unsigned short CobID, unsigned short Length, void* pData, unsigned int* pErrorCode);
-int  VCS_ReadCANFrame(void* KeyHandle, unsigned short CobID, unsigned short Length, void* pData, unsigned int Timeout, unsigned int* pErrorCode);
-int  VCS_RequestCANFrame(void* KeyHandle, unsigned short CobID, unsigned short Length, void* pData, unsigned int* pErrorCode);
-int  VCS_SendNMTService(void* KeyHandle, unsigned short NodeId, unsigned short CommandSpecifier, unsigned int* pErrorCode);
+int32_t  VCS_SendCANFrame(void* KeyHandle, uint16_t CobID, uint16_t Length, void* pData, uint32_t* pErrorCode);
+int32_t  VCS_ReadCANFrame(void* KeyHandle, uint16_t CobID, uint16_t Length, void* pData, uint32_t Timeout, uint32_t* pErrorCode);
+int32_t  VCS_RequestCANFrame(void* KeyHandle, uint16_t CobID, uint16_t Length, void* pData, uint32_t* pErrorCode);
+int32_t  VCS_SendNMTService(void* KeyHandle, uint16_t NodeId, uint16_t CommandSpecifier, uint32_t* pErrorCode);
 
 /*************************************************************************************************************************************
  * TYPE DEFINITIONS
  *************************************************************************************************************************************/
 //Communication
 //Dialog Mode
-const int DM_PROGRESS_DLG                   = 0;
-const int DM_PROGRESS_AND_CONFIRM_DLG       = 1;
-const int DM_CONFIRM_DLG                    = 2;
-const int DM_NO_DLG                         = 3;
+const int32_t DM_PROGRESS_DLG                   = 0;
+const int32_t DM_PROGRESS_AND_CONFIRM_DLG       = 1;
+const int32_t DM_CONFIRM_DLG                    = 2;
+const int32_t DM_NO_DLG                         = 3;
 
 //Configuration
 //MotorType
-const unsigned short MT_DC_MOTOR                      = 1;
-const unsigned short MT_EC_SINUS_COMMUTATED_MOTOR     = 10;
-const unsigned short MT_EC_BLOCK_COMMUTATED_MOTOR     = 11;
+const uint16_t MT_DC_MOTOR                      = 1;
+const uint16_t MT_EC_SINUS_COMMUTATED_MOTOR     = 10;
+const uint16_t MT_EC_BLOCK_COMMUTATED_MOTOR     = 11;
 
 //SensorType
-const unsigned short ST_UNKNOWN                       = 0;
-const unsigned short ST_INC_ENCODER_3CHANNEL          = 1;
-const unsigned short ST_INC_ENCODER_2CHANNEL          = 2;
-const unsigned short ST_HALL_SENSORS                  = 3;
-const unsigned short ST_SSI_ABS_ENCODER_BINARY        = 4;
-const unsigned short ST_SSI_ABS_ENCODER_GREY          = 5;
-const unsigned short ST_INC_ENCODER2_3CHANNEL         = 6;
-const unsigned short ST_INC_ENCODER2_2CHANNEL         = 7;
-const unsigned short ST_ANALOG_INC_ENCODER_3CHANNEL   = 8;
-const unsigned short ST_ANALOG_INC_ENCODER_2CHANNEL   = 9;
+const uint16_t ST_UNKNOWN                       = 0;
+const uint16_t ST_INC_ENCODER_3CHANNEL          = 1;
+const uint16_t ST_INC_ENCODER_2CHANNEL          = 2;
+const uint16_t ST_HALL_SENSORS                  = 3;
+const uint16_t ST_SSI_ABS_ENCODER_BINARY        = 4;
+const uint16_t ST_SSI_ABS_ENCODER_GREY          = 5;
+const uint16_t ST_INC_ENCODER2_3CHANNEL         = 6;
+const uint16_t ST_INC_ENCODER2_2CHANNEL         = 7;
+const uint16_t ST_ANALOG_INC_ENCODER_3CHANNEL   = 8;
+const uint16_t ST_ANALOG_INC_ENCODER_2CHANNEL   = 9;
 
 //In- and outputs
 //Digital input configuration
-const unsigned short DIC_NEGATIVE_LIMIT_SWITCH        = 0;
-const unsigned short DIC_POSITIVE_LIMIT_SWITCH        = 1;
-const unsigned short DIC_HOME_SWITCH                  = 2;
-const unsigned short DIC_POSITION_MARKER              = 3;
-const unsigned short DIC_DRIVE_ENABLE                 = 4;
-const unsigned short DIC_QUICK_STOP                   = 5;
-const unsigned short DIC_GENERAL_PURPOSE_J            = 6;
-const unsigned short DIC_GENERAL_PURPOSE_I            = 7;
-const unsigned short DIC_GENERAL_PURPOSE_H            = 8;
-const unsigned short DIC_GENERAL_PURPOSE_G            = 9;
-const unsigned short DIC_GENERAL_PURPOSE_F            = 10;
-const unsigned short DIC_GENERAL_PURPOSE_E            = 11;
-const unsigned short DIC_GENERAL_PURPOSE_D            = 12;
-const unsigned short DIC_GENERAL_PURPOSE_C            = 13;
-const unsigned short DIC_GENERAL_PURPOSE_B            = 14;
-const unsigned short DIC_GENERAL_PURPOSE_A            = 15;
+const uint16_t DIC_NEGATIVE_LIMIT_SWITCH        = 0;
+const uint16_t DIC_POSITIVE_LIMIT_SWITCH        = 1;
+const uint16_t DIC_HOME_SWITCH                  = 2;
+const uint16_t DIC_POSITION_MARKER              = 3;
+const uint16_t DIC_DRIVE_ENABLE                 = 4;
+const uint16_t DIC_QUICK_STOP                   = 5;
+const uint16_t DIC_GENERAL_PURPOSE_J            = 6;
+const uint16_t DIC_GENERAL_PURPOSE_I            = 7;
+const uint16_t DIC_GENERAL_PURPOSE_H            = 8;
+const uint16_t DIC_GENERAL_PURPOSE_G            = 9;
+const uint16_t DIC_GENERAL_PURPOSE_F            = 10;
+const uint16_t DIC_GENERAL_PURPOSE_E            = 11;
+const uint16_t DIC_GENERAL_PURPOSE_D            = 12;
+const uint16_t DIC_GENERAL_PURPOSE_C            = 13;
+const uint16_t DIC_GENERAL_PURPOSE_B            = 14;
+const uint16_t DIC_GENERAL_PURPOSE_A            = 15;
 
 //Digital output configuration
-const unsigned short DOC_READY_FAULT                  = 0;
-const unsigned short DOC_POSITION_COMPARE             = 1;
-const unsigned short DOC_GENERAL_PURPOSE_H            = 8;
-const unsigned short DOC_GENERAL_PURPOSE_G            = 9;
-const unsigned short DOC_GENERAL_PURPOSE_F            = 10;
-const unsigned short DOC_GENERAL_PURPOSE_E            = 11;
-const unsigned short DOC_GENERAL_PURPOSE_D            = 12;
-const unsigned short DOC_GENERAL_PURPOSE_C            = 13;
-const unsigned short DOC_GENERAL_PURPOSE_B            = 14;
-const unsigned short DOC_GENERAL_PURPOSE_A            = 15;
+const uint16_t DOC_READY_FAULT                  = 0;
+const uint16_t DOC_POSITION_COMPARE             = 1;
+const uint16_t DOC_GENERAL_PURPOSE_H            = 8;
+const uint16_t DOC_GENERAL_PURPOSE_G            = 9;
+const uint16_t DOC_GENERAL_PURPOSE_F            = 10;
+const uint16_t DOC_GENERAL_PURPOSE_E            = 11;
+const uint16_t DOC_GENERAL_PURPOSE_D            = 12;
+const uint16_t DOC_GENERAL_PURPOSE_C            = 13;
+const uint16_t DOC_GENERAL_PURPOSE_B            = 14;
+const uint16_t DOC_GENERAL_PURPOSE_A            = 15;
 
 //Analog input configuration
-const unsigned short AIC_ANALOG_CURRENT_SETPOINT      = 0;
-const unsigned short AIC_ANALOG_VELOCITY_SETPOINT     = 1;
-const unsigned short AIC_ANALOG_POSITION_SETPOINT     = 2;
-const unsigned short AIC_GENERAL_PURPOSE_H            = 8;
-const unsigned short AIC_GENERAL_PURPOSE_G            = 9;
-const unsigned short AIC_GENERAL_PURPOSE_F            = 10;
-const unsigned short AIC_GENERAL_PURPOSE_E            = 11;
-const unsigned short AIC_GENERAL_PURPOSE_D            = 12;
-const unsigned short AIC_GENERAL_PURPOSE_C            = 13;
-const unsigned short AIC_GENERAL_PURPOSE_B            = 14;
-const unsigned short AIC_GENERAL_PURPOSE_A            = 15;
+const uint16_t AIC_ANALOG_CURRENT_SETPOint32_t      = 0;
+const uint16_t AIC_ANALOG_VELOCITY_SETPOint32_t     = 1;
+const uint16_t AIC_ANALOG_POSITION_SETPOint32_t     = 2;
+const uint16_t AIC_GENERAL_PURPOSE_H            = 8;
+const uint16_t AIC_GENERAL_PURPOSE_G            = 9;
+const uint16_t AIC_GENERAL_PURPOSE_F            = 10;
+const uint16_t AIC_GENERAL_PURPOSE_E            = 11;
+const uint16_t AIC_GENERAL_PURPOSE_D            = 12;
+const uint16_t AIC_GENERAL_PURPOSE_C            = 13;
+const uint16_t AIC_GENERAL_PURPOSE_B            = 14;
+const uint16_t AIC_GENERAL_PURPOSE_A            = 15;
 
 //Analog output configuration
-const unsigned short AOC_GENERAL_PURPOSE_A            = 0;
-const unsigned short AOC_GENERAL_PURPOSE_B            = 1;
+const uint16_t AOC_GENERAL_PURPOSE_A            = 0;
+const uint16_t AOC_GENERAL_PURPOSE_B            = 1;
 
 //Units
 //VelocityDimension
-const unsigned char VD_RPM                            = 0xA4;
+const uint8_t VD_RPM                            = 0xA4;
 
 //VelocityNotation
-const signed char VN_STANDARD                         = 0;
-const signed char VN_DECI                             = -1;
-const signed char VN_CENTI                            = -2;
-const signed char VN_MILLI                            = -3;
+const int8_t VN_STANDARD                         = 0;
+const int8_t VN_DECI                             = -1;
+const int8_t VN_CENTI                            = -2;
+const int8_t VN_MILLI                            = -3;
 
 //Operational mode
-const signed char OMD_PROFILE_POSITION_MODE          = 1;
-const signed char OMD_PROFILE_VELOCITY_MODE          = 3;
-const signed char OMD_HOMING_MODE                    = 6;
-const signed char OMD_INTERPOLATED_POSITION_MODE     = 7;
-const signed char OMD_POSITION_MODE                  = -1;
-const signed char OMD_VELOCITY_MODE                  = -2;
-const signed char OMD_CURRENT_MODE                   = -3;
-const signed char OMD_MASTER_ENCODER_MODE            = -5;
-const signed char OMD_STEP_DIRECTION_MODE            = -6;
+const int8_t OMD_PROFILE_POSITION_MODE          = 1;
+const int8_t OMD_PROFILE_VELOCITY_MODE          = 3;
+const int8_t OMD_HOMING_MODE                    = 6;
+const int8_t OMD_INTERPOLATED_POSITION_MODE     = 7;
+const int8_t OMD_POSITION_MODE                  = -1;
+const int8_t OMD_VELOCITY_MODE                  = -2;
+const int8_t OMD_CURRENT_MODE                   = -3;
+const int8_t OMD_MASTER_ENCODER_MODE            = -5;
+const int8_t OMD_STEP_DIRECTION_MODE            = -6;
 
 //States
-const unsigned short ST_DISABLED                         = 0;
-const unsigned short ST_ENABLED                          = 1;
-const unsigned short ST_QUICKSTOP                        = 2;
-const unsigned short ST_FAULT                            = 3;
+const uint16_t ST_DISABLED                         = 0;
+const uint16_t ST_ENABLED                          = 1;
+const uint16_t ST_QUICKSTOP                        = 2;
+const uint16_t ST_FAULT                            = 3;
 
 //Homing mode
 //Homing method
-const char HM_ACTUAL_POSITION                               = 35;
-const char HM_NEGATIVE_LIMIT_SWITCH                         = 17;
-const char HM_NEGATIVE_LIMIT_SWITCH_AND_INDEX               = 1;
-const char HM_POSITIVE_LIMIT_SWITCH                         = 18;
-const char HM_POSITIVE_LIMIT_SWITCH_AND_INDEX               = 2;
-const char HM_HOME_SWITCH_POSITIVE_SPEED                    = 23;
-const char HM_HOME_SWITCH_POSITIVE_SPEED_AND_INDEX          = 7;
-const char HM_HOME_SWITCH_NEGATIVE_SPEED                    = 27;
-const char HM_HOME_SWITCH_NEGATIVE_SPEED_AND_INDEX          = 11;
-const char HM_CURRENT_THRESHOLD_POSITIVE_SPEED              = -3;
-const char HM_CURRENT_THRESHOLD_POSITIVE_SPEED_AND_INDEX    = -1;
-const char HM_CURRENT_THRESHOLD_NEGATIVE_SPEED              = -4;
-const char HM_CURRENT_THRESHOLD_NEGATIVE_SPEED_AND_INDEX    = -2;
-const char HM_INDEX_POSITIVE_SPEED                          = 34;
-const char HM_INDEX_NEGATIVE_SPEED                          = 33;
+const int8_t HM_ACTUAL_POSITION                               = 35;
+const int8_t HM_NEGATIVE_LIMIT_SWITCH                         = 17;
+const int8_t HM_NEGATIVE_LIMIT_SWITCH_AND_INDEX               = 1;
+const int8_t HM_POSITIVE_LIMIT_SWITCH                         = 18;
+const int8_t HM_POSITIVE_LIMIT_SWITCH_AND_INDEX               = 2;
+const int8_t HM_HOME_SWITCH_POSITIVE_SPEED                    = 23;
+const int8_t HM_HOME_SWITCH_POSITIVE_SPEED_AND_INDEX          = 7;
+const int8_t HM_HOME_SWITCH_NEGATIVE_SPEED                    = 27;
+const int8_t HM_HOME_SWITCH_NEGATIVE_SPEED_AND_INDEX          = 11;
+const int8_t HM_CURRENT_THRESHOLD_POSITIVE_SPEED              = -3;
+const int8_t HM_CURRENT_THRESHOLD_POSITIVE_SPEED_AND_INDEX    = -1;
+const int8_t HM_CURRENT_THRESHOLD_NEGATIVE_SPEED              = -4;
+const int8_t HM_CURRENT_THRESHOLD_NEGATIVE_SPEED_AND_INDEX    = -2;
+const int8_t HM_INDEX_POSITIVE_SPEED                          = 34;
+const int8_t HM_INDEX_NEGATIVE_SPEED                          = 33;
 
 //Input Output PositionMarker
 //PositionMarkerEdgeType
-const unsigned char PET_BOTH_EDGES                   = 0;
-const unsigned char PET_RISING_EDGE                  = 1;
-const unsigned char PET_FALLING_EDGE                 = 2;
+const uint8_t PET_BOTH_EDGES                   = 0;
+const uint8_t PET_RISING_EDGE                  = 1;
+const uint8_t PET_FALLING_EDGE                 = 2;
 
 //PositionMarkerMode
-const unsigned char PM_CONTINUOUS                    = 0;
-const unsigned char PM_SINGLE                        = 1;
-const unsigned char PM_MULTIPLE                      = 2;
+const uint8_t PM_CONTINUOUS                    = 0;
+const uint8_t PM_SINGLE                        = 1;
+const uint8_t PM_MULTIPLE                      = 2;
 
 //Input Output PositionCompare
 //PositionCompareOperationalMode
-const unsigned char PCO_SINGLE_POSITION_MODE         = 0;
-const unsigned char PCO_POSITION_SEQUENCE_MODE       = 1;
+const uint8_t PCO_SINGLE_POSITION_MODE         = 0;
+const uint8_t PCO_POSITION_SEQUENCE_MODE       = 1;
 
 //PositionCompareIntervalMode
-const unsigned char PCI_NEGATIVE_DIR_TO_REFPOS       = 0;
-const unsigned char PCI_POSITIVE_DIR_TO_REFPOS       = 1;
-const unsigned char PCI_BOTH_DIR_TO_REFPOS           = 2;
+const uint8_t PCI_NEGATIVE_DIR_TO_REFPOS       = 0;
+const uint8_t PCI_POSITIVE_DIR_TO_REFPOS       = 1;
+const uint8_t PCI_BOTH_DIR_TO_REFPOS           = 2;
 
 //PositionCompareDirectionDependency
-const unsigned char PCD_MOTOR_DIRECTION_NEGATIVE     = 0;
-const unsigned char PCD_MOTOR_DIRECTION_POSITIVE     = 1;
-const unsigned char PCD_MOTOR_DIRECTION_BOTH         = 2;
+const uint8_t PCD_MOTOR_DIRECTION_NEGATIVE     = 0;
+const uint8_t PCD_MOTOR_DIRECTION_POSITIVE     = 1;
+const uint8_t PCD_MOTOR_DIRECTION_BOTH         = 2;
 
 //Data recorder
 //Trigger type
-const unsigned short DR_MOVEMENT_START_TRIGGER        = 1;    //bit 1
-const unsigned short DR_ERROR_TRIGGER                 = 2;    //bit 2
-const unsigned short DR_DIGITAL_INPUT_TRIGGER         = 4;    //bit 3
-const unsigned short DR_MOVEMENT_END_TRIGGER          = 8;    //bit 4
+const uint16_t DR_MOVEMENT_START_TRIGGER        = 1;    //bit 1
+const uint16_t DR_ERROR_TRIGGER                 = 2;    //bit 2
+const uint16_t DR_DIGITAL_INPUT_TRIGGER         = 4;    //bit 3
+const uint16_t DR_MOVEMENT_END_TRIGGER          = 8;    //bit 4
 
 //CanLayer Functions
-const unsigned short NCS_START_REMOTE_NODE            = 1;
-const unsigned short NCS_STOP_REMOTE_NODE             = 2;
-const unsigned short NCS_ENTER_PRE_OPERATIONAL        = 128;
-const unsigned short NCS_RESET_NODE                   = 129;
-const unsigned short NCS_RESET_COMMUNICATION          = 130;
+const uint16_t NCS_START_REMOTE_NODE            = 1;
+const uint16_t NCS_STOP_REMOTE_NODE             = 2;
+const uint16_t NCS_ENTER_PRE_OPERATIONAL        = 128;
+const uint16_t NCS_RESET_NODE                   = 129;
+const uint16_t NCS_RESET_COMMUNICATION          = 130;
 
 // Controller Gains
 // EController
-const unsigned short EC_PI_CURRENT_CONTROLLER                   = 1;
-const unsigned short EC_PI_VELOCITY_CONTROLLER                  = 10;
-const unsigned short EC_PI_VELOCITY_CONTROLLER_WITH_OBSERVER    = 11;
-const unsigned short EC_PID_POSITION_CONTROLLER                 = 20;
-const unsigned short EC_DUAL_LOOP_POSITION_CONTROLLER           = 21;
+const uint16_t EC_PI_CURRENT_CONTROLLER                   = 1;
+const uint16_t EC_PI_VELOCITY_CONTROLLER                  = 10;
+const uint16_t EC_PI_VELOCITY_CONTROLLER_WITH_OBSERVER    = 11;
+const uint16_t EC_PID_POSITION_CONTROLLER                 = 20;
+const uint16_t EC_DUAL_LOOP_POSITION_CONTROLLER           = 21;
 
 // EGain (EC_PI_CURRENT_CONTROLLER)
-const unsigned short EG_PICC_P_GAIN                             = 1;
-const unsigned short EG_PICC_I_GAIN                             = 2;
+const uint16_t EG_PICC_P_GAIN                             = 1;
+const uint16_t EG_PICC_I_GAIN                             = 2;
 
 // EGain (EC_PI_VELOCITY_CONTROLLER)
-const unsigned short EG_PIVC_P_GAIN                             = 1;
-const unsigned short EG_PIVC_I_GAIN                             = 2;
-const unsigned short EG_PIVC_FEED_FORWARD_VELOCITY_GAIN         = 10;
-const unsigned short EG_PIVC_FEED_FORWARD_ACCELERATION_GAIN     = 11;
+const uint16_t EG_PIVC_P_GAIN                             = 1;
+const uint16_t EG_PIVC_I_GAIN                             = 2;
+const uint16_t EG_PIVC_FEED_FORWARD_VELOCITY_GAIN         = 10;
+const uint16_t EG_PIVC_FEED_FORWARD_ACCELERATION_GAIN     = 11;
 
 // EGain (EC_PI_VELOCITY_CONTROLLER_WITH_OBSERVER)
-const unsigned short EG_PIVCWO_P_GAIN                           = 1;
-const unsigned short EG_PIVCWO_I_GAIN                           = 2;
-const unsigned short EG_PIVCWO_FEED_FORWARD_VELOCITY_GAIN       = 10;
-const unsigned short EG_PIVCWO_FEED_FORWARD_ACCELERATION_GAIN   = 11;
-const unsigned short EG_PIVCWO_OBSERVER_THETA_GAIN              = 20;
-const unsigned short EG_PIVCWO_OBSERVER_OMEGA_GAIN              = 21;
-const unsigned short EG_PIVCWO_OBSERVER_TAU_GAIN                = 22;
+const uint16_t EG_PIVCWO_P_GAIN                           = 1;
+const uint16_t EG_PIVCWO_I_GAIN                           = 2;
+const uint16_t EG_PIVCWO_FEED_FORWARD_VELOCITY_GAIN       = 10;
+const uint16_t EG_PIVCWO_FEED_FORWARD_ACCELERATION_GAIN   = 11;
+const uint16_t EG_PIVCWO_OBSERVER_THETA_GAIN              = 20;
+const uint16_t EG_PIVCWO_OBSERVER_OMEGA_GAIN              = 21;
+const uint16_t EG_PIVCWO_OBSERVER_TAU_GAIN                = 22;
 
 // EGain (EC_PID_POSITION_CONTROLLER)
-const unsigned short EG_PIDPC_P_GAIN                            = 1;
-const unsigned short EG_PIDPC_I_GAIN                            = 2;
-const unsigned short EG_PIDPC_D_GAIN                            = 3;
-const unsigned short EG_PIDPC_FEED_FORWARD_VELOCITY_GAIN        = 10;
-const unsigned short EG_PIDPC_FEED_FORWARD_ACCELERATION_GAIN    = 11;
+const uint16_t EG_PIDPC_P_GAIN                            = 1;
+const uint16_t EG_PIDPC_I_GAIN                            = 2;
+const uint16_t EG_PIDPC_D_GAIN                            = 3;
+const uint16_t EG_PIDPC_FEED_FORWARD_VELOCITY_GAIN        = 10;
+const uint16_t EG_PIDPC_FEED_FORWARD_ACCELERATION_GAIN    = 11;
 
 // EGain (EC_DUAL_LOOP_POSITION_CONTROLLER)
-const unsigned short EG_DLPC_AUXILIARY_LOOP_P_GAIN                          = 1;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_I_GAIN                          = 2;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_FEED_FORWARD_VELOCITY_GAIN      = 10;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_FEED_FORWARD_ACCELERATION_GAIN  = 11;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_OBSERVER_THETA_GAIN             = 20;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_OBSERVER_OMEGA_GAIN             = 21;
-const unsigned short EG_DLPC_AUXILIARY_LOOP_OBSERVER_TAU_GAIN               = 22;
-const unsigned short EG_DLPC_MAIN_LOOP_P_GAIN_LOW                           = 101;
-const unsigned short EG_DLPC_MAIN_LOOP_P_GAIN_HIGH                          = 102;
-const unsigned short EG_DLPC_MAIN_LOOP_GAIN_SCHEDULING_WEIGHT               = 110;
-const unsigned short EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_A                 = 120;
-const unsigned short EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_B                 = 121;
-const unsigned short EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_C                 = 122;
-const unsigned short EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_D                 = 123;
-const unsigned short EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_E                 = 124;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_P_GAIN                          = 1;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_I_GAIN                          = 2;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_FEED_FORWARD_VELOCITY_GAIN      = 10;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_FEED_FORWARD_ACCELERATION_GAIN  = 11;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_OBSERVER_THETA_GAIN             = 20;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_OBSERVER_OMEGA_GAIN             = 21;
+const uint16_t EG_DLPC_AUXILIARY_LOOP_OBSERVER_TAU_GAIN               = 22;
+const uint16_t EG_DLPC_MAIN_LOOP_P_GAIN_LOW                           = 101;
+const uint16_t EG_DLPC_MAIN_LOOP_P_GAIN_HIGH                          = 102;
+const uint16_t EG_DLPC_MAIN_LOOP_GAIN_SCHEDULING_WEIGHT               = 110;
+const uint16_t EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_A                 = 120;
+const uint16_t EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_B                 = 121;
+const uint16_t EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_C                 = 122;
+const uint16_t EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_D                 = 123;
+const uint16_t EG_DLPC_MAIN_LOOP_FILTER_COEFFICIENT_E                 = 124;
 
 #endif //_H_LINUX_EPOSCMD_
 

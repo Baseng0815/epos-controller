@@ -3,15 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *open_device(void);
-void 
+void *device_open(void);
+void protocol_settings_dump(void *device);
 
 int main(int argc, char *argv[])
 {
-        void *device = open_device();
+        void *device = device_open();
 }
 
-void *open_device(void)
+void *device_open(void)
 {
         const char *device_name         = "EPOS4";
         const char *protocol_stack_name = "CANopen";
@@ -19,9 +19,9 @@ void *open_device(void)
         const char *port_name           = "CAN0";
 
         unsigned int err;
-        void *ret = VCS_OpenDevice(device_name, protocol_stack_name,
+        void *device = VCS_OpenDevice(device_name, protocol_stack_name,
                                    interface_name, port_name, &err);
-        if (ret == NULL) {
+        if (device == NULL) {
                 fprintf(stderr, "Failed to open device %s using protocol %s on"
                         " interface %s and port %s: error code %x\n",
                         device_name, protocol_stack_name, interface_name,
@@ -29,5 +29,11 @@ void *open_device(void)
                 exit(err);
         }
 
-        return ret;
+        return device;
+}
+
+void protocol_settings_dump(void *device)
+{
+        unsigned int err;
+
 }
