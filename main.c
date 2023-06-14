@@ -2,72 +2,108 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define MAX_STR_SIZE 64
 
-void print_error_and_quit(const char *what, uint32_t err);
+// port settings
+const char *DEV_NAME    = "EPOS4";
+const char *PROTO_NAME  = "CANopen";
+const char *IF_NAME     = "CAN_mcp251x 0";
+const char *PORT_NAME   = "CAN0";
 
-void *device_open(void);
-void device_close(void *device);
+// protocol stack settings
+const uint32_t BAUDRATE = 250000; // 250 kbit/s
+const uint32_t TIMEOUT  = 500; // 500 ms
+
+const uint16_t NODE_ID 	= 2;
+
+void *port_open(void);
+void port_close(void *port);
+void protocol_stack_settings_set(void *port);
+void node_reset(void *port, uint16_t node_id);
+void node_configure(void *port, uint16_t node_id);
 
 void driver_info_dump(void);
-void protocol_settings_dump(void *device);
+
+void print_error_and_quit(const char *what, uint32_t err);
 
 int main(int argc, char *argv[])
 {
         driver_info_dump();
 
-        void *device = device_open();
-        protocol_settings_dump(device);
-        device_close(device);
+        void *port = port_open();
+        protocol_stack_settings_set(port);
 
+	node_reset(port, NODE_ID);
+	sleep(3);
+	node_configure(port, NODE_ID);
+
+        port_close(port);
         return 0;
 }
 
-void print_error_and_quit(const char *what, uint32_t err)
+void *port_open(void)
 {
-        fprintf(stderr, "%s: 0x%x", what, err);
 
-        char err_info[MAX_STR_SIZE];
-        if (VCS_GetErrorInfo(err, err_info, MAX_STR_SIZE)) {
-                fprintf(stderr, " (%s)", err_info);
-        }
-
-        fprintf(stderr, "\n");
-        exit(1);
-}
-
-void *device_open(void)
-{
-        const char *dev_name    = "EPOS4";
-        const char *proto_name  = "CANopen";
-        const char *if_name     = "TODO INTERFACE";
-        const char *port_name   = "CAN0";
-
-        printf("opening device '%s' using protocol '%s' on interface '%s' and"
-               " port '%s'...\n", dev_name, proto_name, if_name, port_name);
+        printf("opening port '%s' using protocol '%s' on interface '%s' and"
+               " port '%s'...\n", DEV_NAME, PROTO_NAME, IF_NAME, PORT_NAME);
 
         uint32_t err;
-        void *device = VCS_OpenDevice(dev_name, proto_name, if_name, port_name,
+        void *port = VCS_OpenDevice(DEV_NAME, PROTO_NAME, IF_NAME, PORT_NAME,
                                       &err);
-        if (!device) {
-                print_error_and_quit("failed to open device", err);
+        if (!port) {
+                print_error_and_quit("failed to open port", err);
         }
 
-        printf("device opened: handle=0x%x\n", device);
-        return device;
+        printf("port opened: handle=0x%x\n", port);
+        return port;
 }
 
-void device_close(void *device)
+void port_close(void *port)
 {
-        printf("closing device 0x%x...\n", device);
+        printf("closing port 0x%x...\n", port);
 
         uint32_t err;
-        if (!VCS_CloseDevice(device, &err)) {
-                print_error_and_quit("failed to close device", err);
+        if (!VCS_CloseDevice(port, &err)) {
+                print_error_and_quit("failed to close port", err);
         }
+}
 
-        printf("device closed\n");
+void protocol_stack_settings_set(void *port)
+{
+        printf("setting baudrate to %dkbits/s and timeout to %ums...\n",
+               BAUDRATE / 1000, TIMEOUT);
+
+        uint32_t err;
+        if (!VCS_SetProtocolStackSettings(port, BAUDRATE, TIMEOUT, &err)) {
+                print_error_and_quit("failed to set protocol stack settings",
+                                     err);
+        }
+}
+
+void node_reset(void *port, uint16_t node_id)
+{
+	printf("resetting node %u...\n");
+	uint32_t err;
+	if (!VCS_SendNMTService(port, node_id, NCS_RESET_NODE, &err)) {
+		print_error_and_quit("failed to reset node", err);
+	}
+}
+
+void node_configure(void *port, uint16_t node_id)
+{
+	printf("configuring node %u...\n", node_id);
+
+	uint16_t data;
+	uint32_t bytes_read;
+	uint32_t err;
+	if (!VCS_GetObject(port, node_id, 0x2200, 0x1, &data, sizeof(data),
+				&bytes_read, &err)) {
+		print_error_and_quit("failed to get position must", err);
+	}
+
+	printf("%u\n", data);
 }
 
 void driver_info_dump(void)
@@ -86,15 +122,16 @@ void driver_info_dump(void)
         printf("driver name='%s' (version '%s')\n", lib_name, lib_version);
 }
 
-void protocol_settings_dump(void *device)
+void print_error_and_quit(const char *what, uint32_t err)
 {
-        printf("getting protocol information for device 0x%x...\n", device);
+        fprintf(stderr, "%s: 0x%x", what, err);
 
-        uint32_t err, baudrate, timeout;
-        if (!VCS_GetProtocolStackSettings(device, &baudrate, &timeout, &err)) {
-                print_error_and_quit("failed to get protocol settings", err);
+        char err_info[MAX_STR_SIZE];
+        if (VCS_GetErrorInfo(err, err_info, MAX_STR_SIZE)) {
+                fprintf(stderr, " (%s)", err_info);
         }
 
-        printf("baudrate=%d, timeout=%d\n", baudrate, timeout);
+        fprintf(stderr, "\n");
+        exit(1);
 }
 

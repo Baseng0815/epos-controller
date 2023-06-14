@@ -1,7 +1,6 @@
-CC		= gcc
-FLAGS		= -I./deps -lEposCmd -lftd2xx -Wall -ggdb
+CC		= clang
+FLAGS		=  -Wall -ggdb -I./deps -L/usr/local/lib -lEposCmd -lftd2xx
 SOURCE_FILES	= $(shell find . -type f -name '*.c')
-OBJECT_FILES	= $(SOURCE_FILES:.c=.o)
 
 TARGET		= example
 
@@ -9,7 +8,7 @@ TARGET		= example
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECT_FILES)
+$(TARGET): $(SOURCE_FILES)
 	$(CC) $(FLAGS) $^ -o $@
 
 clean:
