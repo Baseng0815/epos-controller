@@ -16,7 +16,18 @@ const char *PORT_NAME   = "CAN0";
 const uint32_t BAUDRATE = 250000; // 250 kbit/s
 const uint32_t TIMEOUT  = 500; // 500 ms
 
+// node settings
 const uint16_t NODE_ID 	= 2;
+
+// motor settings
+const uint16_t MOTOR_TYPE = MT_EC_SINUS_COMMUTATED_MOTOR;
+const uint32_t NOMINAL_CURRENT;
+const uint32_t OUTPUT_CURRENT_LIMIT;
+const uint8_t NUMBER_OF_POLE_PAIRS;
+const uint16_t THERMAL_TIME_CONSTANT_WINDING;
+const uint32_t TORQUE_CONSTANT;
+const uint32_t MAX_MOTOR_SPEED;
+const uint32_t MAX_GEAR_INPUT_SPEED;
 
 void *port_open(void);
 void port_close(void *port);
