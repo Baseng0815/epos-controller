@@ -29,7 +29,7 @@ const uint16_t MOTOR_TYPE = MT_EC_SINUS_COMMUTATED_MOTOR; // motor-specific
 const uint32_t NOMINAL_CURRENT; // motor-specific
 const uint32_t OUTPUT_CURRENT_LIMIT; // user-specific
 const uint8_t  NUMBER_OF_POLE_PAIRS; // motor-specific
-const uint16_t THERMAL_TIME_CONSTANT_WINDING; // motor-specific
+const uint16_t THERMAL_TIME_CONSTANT; // motor-specific
 const uint32_t TORQUE_CONSTANT; // motor-specific
 const uint32_t MAX_MOTOR_SPEED; // user-specific
 const uint32_t MAX_GEAR_INPUT_SPEED; // user-specific
@@ -52,15 +52,19 @@ void port_close(void *port);
 // Set port settings like baudrate and timeout.
 void port_configure(void *port);
 
-// Reset node, i.e. change NMT state to pre-operational.
+// Reset node, i.e. change NMT state to pre-operational
 // (see https://www.can-cia.org/can-knowledge/canopen/network-management/ for
-// details)
+// details).
 void node_reset(void *port, uint16_t node_id);
 
-// Configure node parameters by writing to object dictionary with SDO protocol.
-// Parameters configured are for example motor parameters like its type and
-// number of pole pairs.
+// Configure node parameters by writing parameters to object dictionary.
+// Parameters configured are mode-independent parameters like motor type and
+// number of pole pairs and sensor configuration.
 void node_configure(void *port, uint16_t node_id);
+
+// Test a node by entering profile velocity mode (PVM) and setting the target
+// velocity to 1rpm.
+void node_test_1rpm(void *port, uint16_t node_id);
 
 // utility functions
 void driver_info_dump(void);
@@ -75,7 +79,10 @@ int main(int argc, char *argv[])
 
         node_reset(port, NODE_ID);
         sleep(3);
-        node_configure(port, NODE_ID);
+        // not needed since all parameters are stored in non-volatile memory
+        // node_configure(port, NODE_ID);
+
+        node_test_1rpm(port, NODE_ID);
 
         port_close(port);
         return 0;
@@ -140,7 +147,7 @@ void node_configure(void *port, uint16_t node_id)
         if (!VCS_SetMotorType(port, node_id, MOTOR_TYPE, &err) ||
             !VCS_SetDcMotorParameterEx(port, node_id, NOMINAL_CURRENT,
                                        OUTPUT_CURRENT_LIMIT,
-                                       THERMAL_TIME_CONSTANT_WINDING,
+                                       THERMAL_TIME_CONSTANT,
                                        &err) ||
             !VCS_SetObject(port, node_id, COB_ID_MAX_MOTOR_SPEED.id,
                            COB_ID_MAX_MOTOR_SPEED.sid,
@@ -150,14 +157,14 @@ void node_configure(void *port, uint16_t node_id)
                            COB_ID_MAX_GEAR_INPUT_SPEED.sid,
                            &MAX_GEAR_INPUT_SPEED, sizeof(MAX_GEAR_INPUT_SPEED),
                            &bytes_written, &err)) {
-                die("failed to configure motor\n", err);
+                die("failed to configure motor", err);
         }
 
         printf("|-> configured motor with MOTOR_TYPE=%d, NOMINAL_CURRENT=%d, "
                "OUTPUT_CURRENT_LIMIT=%d, THERMAL_TIME_CONSTANT_WINDING=%d, "
                "NUMBER_OF_POLE_PAIRS=%d, MAX_MOTOR_SPEED=%d, "
                "MAX_GEAR_INPUT_SPEED=%d\n", MOTOR_TYPE, NOMINAL_CURRENT,
-               OUTPUT_CURRENT_LIMIT, THERMAL_TIME_CONSTANT_WINDING,
+               OUTPUT_CURRENT_LIMIT, THERMAL_TIME_CONSTANT,
                NUMBER_OF_POLE_PAIRS, MAX_MOTOR_SPEED, MAX_GEAR_INPUT_SPEED);
 
         if (MOTOR_TYPE == MT_EC_BLOCK_COMMUTATED_MOTOR ||
@@ -185,6 +192,24 @@ void node_configure(void *port, uint16_t node_id)
         }
 
         printf("%u\n", data);
+}
+
+void node_test_1rpm(void *port, uint16_t node_id)
+{
+        uint32_t err;
+        if (!VCS_ActivateProfilePositionMode(port, node_id, &err)) {
+                die("failed to set operational mode to PVM", err);
+        }
+
+        // 10'000rpm/s
+        if (!VCS_SetVelocityProfile(port, node_id, 1, 1, &err)) {
+                die("failed to set velocity profile", err);
+        }
+
+        // move with 1rpm
+        if (!VCS_MoveWithVelocity(port, node_id, 1, &err)) {
+                die("failed to move with target velocity", err);
+        }
 }
 
 void driver_info_dump(void)
