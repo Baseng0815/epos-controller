@@ -1,4 +1,5 @@
 #include "deps/Definitions.h"
+#include "settings.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,48 +8,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
-
-#define MAX_STR_SIZE 64
-
-struct cob_id {
-        uint16_t id;
-        uint8_t sid;
-};
-
-// port settings
-const char *DEV_NAME    = "EPOS4";
-const char *PROTO_NAME  = "CANopen";
-const char *IF_NAME     = "CAN_mcp251x 0";
-const char *PORT_NAME   = "CAN0";
-
-// port settings
-const uint32_t BAUDRATE = 250000; // 250 kbit/s
-const uint32_t TIMEOUT  = 500; // 500 ms
-
-// node settings
-const uint16_t NODE_ID 	= 2;
-
-// motor settings
-const uint16_t MOTOR_TYPE = MT_EC_SINUS_COMMUTATED_MOTOR; // motor-specific
-const uint32_t NOMINAL_CURRENT; // motor-specific
-const uint32_t OUTPUT_CURRENT_LIMIT; // user-specific
-const uint8_t  NUMBER_OF_POLE_PAIRS; // motor-specific
-const uint16_t THERMAL_TIME_CONSTANT; // motor-specific
-const uint32_t TORQUE_CONSTANT; // motor-specific
-const uint32_t MAX_MOTOR_SPEED; // user-specific
-const uint32_t MAX_GEAR_INPUT_SPEED; // user-specific
-
-// position sensor settings
-// application settings
-// ...
-
-// network settings
-const in_port_t RECV_PORT = 12345;
-
-// COB-IDs for objects which cannot be configured directly through the library
-const struct cob_id COB_ID_NUMBER_OF_POLE_PAIRS = { .id = 0x3001, .sid = 0x03 };
-const struct cob_id COB_ID_MAX_MOTOR_SPEED      = { .id = 0x6080, .sid = 0x00 };
-const struct cob_id COB_ID_MAX_GEAR_INPUT_SPEED = { .id = 0x3003, .sid = 0x03 };
 
 // Open a communication port to TX/RX to/from the CAN bus.
 void *port_open(void);
@@ -73,7 +32,8 @@ void node_configure(void *port, uint16_t node_id);
 // velocity to 1rpm.
 void node_test_1rpm(void *port, uint16_t node_id);
 
-// start listening for and accepting an incomming TCP connection
+// start listening for and accepting incoming TCP connections and forwarding
+// commands to the EPOS
 void comm_start(void);
 
 // receive commands for connection until closed
@@ -227,7 +187,7 @@ void node_test_1rpm(void *port, uint16_t node_id)
 
 void comm_loop_enter(int server_fd, int client_fd)
 {
-        uint8_t buf[64];
+        uint8_t buf[NET_BUF_SIZE];
         ssize_t nread = 1;
         while (nread != 0 && nread != -1) {
                 nread = read(client_fd, buf, sizeof(buf));
