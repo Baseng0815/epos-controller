@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 
 #define MAX_STR_SIZE 64
 
@@ -38,6 +42,9 @@ const uint32_t MAX_GEAR_INPUT_SPEED; // user-specific
 // application settings
 // ...
 
+// network settings
+const in_port_t RECV_PORT = 12345;
+
 // COB-IDs for objects which cannot be configured directly through the library
 const struct cob_id COB_ID_NUMBER_OF_POLE_PAIRS = { .id = 0x3001, .sid = 0x03 };
 const struct cob_id COB_ID_MAX_MOTOR_SPEED      = { .id = 0x6080, .sid = 0x00 };
@@ -66,6 +73,12 @@ void node_configure(void *port, uint16_t node_id);
 // velocity to 1rpm.
 void node_test_1rpm(void *port, uint16_t node_id);
 
+// start listening for and accepting an incomming TCP connection
+void comm_start(void);
+
+// receive commands for connection until closed
+void comm_loop_enter(int server_fd, int client_fd);
+
 // utility functions
 void driver_info_dump(void);
 void die(const char *what, uint32_t err);
@@ -74,17 +87,17 @@ int main(int argc, char *argv[])
 {
         driver_info_dump();
 
-        void *port = port_open();
-        port_configure(port);
+        /* void *port = port_open(); */
+        /* port_configure(port); */
 
-        node_reset(port, NODE_ID);
-        sleep(3);
+        /* node_reset(port, NODE_ID); */
         // not needed since all parameters are stored in non-volatile memory
         // node_configure(port, NODE_ID);
 
-        node_test_1rpm(port, NODE_ID);
+        /* node_test_1rpm(port, NODE_ID); */
+        comm_start();
 
-        port_close(port);
+        /* port_close(port); */
         return 0;
 }
 
@@ -123,7 +136,7 @@ void port_configure(void *port)
         uint32_t err;
         if (!VCS_SetProtocolStackSettings(port, BAUDRATE, TIMEOUT, &err)) {
                 die("failed to set port settings",
-                                     err);
+                    err);
         }
 }
 
@@ -197,7 +210,7 @@ void node_configure(void *port, uint16_t node_id)
 void node_test_1rpm(void *port, uint16_t node_id)
 {
         uint32_t err;
-        if (!VCS_ActivateProfilePositionMode(port, node_id, &err)) {
+        if (!VCS_ActivateVelocityMode(port, node_id, &err)) {
                 die("failed to set operational mode to PVM", err);
         }
 
@@ -209,6 +222,67 @@ void node_test_1rpm(void *port, uint16_t node_id)
         // move with 1rpm
         if (!VCS_MoveWithVelocity(port, node_id, 1, &err)) {
                 die("failed to move with target velocity", err);
+        }
+}
+
+void comm_loop_enter(int server_fd, int client_fd)
+{
+        uint8_t buf[64];
+        ssize_t nread = 1;
+        while (nread != 0 && nread != -1) {
+                nread = read(client_fd, buf, sizeof(buf));
+                printf("received %ld bytes: [", nread);
+                for (size_t i = 0; i < nread; i++) {
+                        if (i > 0)
+                                printf(", ");
+                        printf("0x%x", buf[i]);
+                }
+                printf("]\n");
+        }
+}
+
+void comm_start(void)
+{
+        printf("entering communication loop...\n");
+
+        int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+        if (server_fd == -1) {
+                die("failed to instantiate sockfd", 0);
+        }
+
+        printf("|-> created socket with sockfd=%d\n", server_fd);
+
+        const int enable = 1;
+        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+                       &enable, sizeof(enable)) == -1) {
+                die("failed to set socket options", 0);
+        }
+
+        const struct sockaddr_in sockaddr = {
+                .sin_addr.s_addr = INADDR_ANY,
+                .sin_family = AF_INET,
+                .sin_port = htons(RECV_PORT),
+        };
+
+        if (bind(server_fd, &sockaddr, sizeof(sockaddr)) == -1) {
+                die("failed to bind socket", 0);
+        }
+
+        if (listen(server_fd, 1) == -1) {
+                die("failed to put socket in listen mode", 0);
+        }
+
+        while (1) {
+                struct sockaddr_in client_addr;
+                socklen_t client_addr_len;
+                printf("listening for new connection...\n");
+                int client_fd = accept(server_fd, &client_addr, &client_addr_len);
+                if (client_fd == -1) {
+                        die("failed to accept connection", 0);
+                }
+
+                printf("accepted new connection with client_fd=%d\n", client_fd);
+                comm_loop_enter(server_fd, client_fd);
         }
 }
 
@@ -232,9 +306,11 @@ void die(const char *what, uint32_t err)
 {
         fprintf(stderr, "|-> %s: 0x%x", what, err);
 
-        char err_info[MAX_STR_SIZE];
-        if (VCS_GetErrorInfo(err, err_info, MAX_STR_SIZE)) {
-                fprintf(stderr, " (%s)", err_info);
+        if (err != 0) {
+                char err_info[MAX_STR_SIZE];
+                if (VCS_GetErrorInfo(err, err_info, MAX_STR_SIZE)) {
+                        fprintf(stderr, " (%s)", err_info);
+                }
         }
 
         fprintf(stderr, "\n");
